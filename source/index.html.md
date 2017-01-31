@@ -43,7 +43,7 @@ Po fazie beta nie będą wprowadzane tzw. _breaking changes_ czyli zmiany, któr
 
 ## Skalowalność
 
-Aktualna architektura chmurowa (S3/CloudFront) SmogAPI pozwala na obsługę liczby zapytań zdecydowanie przekraczająej obecne zapotrzebowanie.
+Aktualna architektura chmurowa (S3/CloudFront) SmogAPI pozwala na obsługę liczby zapytań zdecydowanie przekraczającej obecne zapotrzebowanie.
 
 ## Dostęp z innych domen
 
