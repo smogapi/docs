@@ -1,0 +1,1150 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>SmogAPI</title>
+
+    <style>
+      .highlight table td { padding: 5px; }
+.highlight table pre { margin: 0; }
+.highlight, .highlight .w {
+  color: #f8f8f2;
+  background-color: #272822;
+}
+.highlight .err {
+  color: #272822;
+  background-color: #f92672;
+}
+.highlight .c, .highlight .cd, .highlight .cm, .highlight .c1, .highlight .cs {
+  color: #75715e;
+}
+.highlight .cp {
+  color: #f4bf75;
+}
+.highlight .nt {
+  color: #f4bf75;
+}
+.highlight .o, .highlight .ow {
+  color: #f8f8f2;
+}
+.highlight .p, .highlight .pi {
+  color: #f8f8f2;
+}
+.highlight .gi {
+  color: #a6e22e;
+}
+.highlight .gd {
+  color: #f92672;
+}
+.highlight .gh {
+  color: #66d9ef;
+  background-color: #272822;
+  font-weight: bold;
+}
+.highlight .k, .highlight .kn, .highlight .kp, .highlight .kr, .highlight .kv {
+  color: #ae81ff;
+}
+.highlight .kc {
+  color: #fd971f;
+}
+.highlight .kt {
+  color: #fd971f;
+}
+.highlight .kd {
+  color: #fd971f;
+}
+.highlight .s, .highlight .sb, .highlight .sc, .highlight .sd, .highlight .s2, .highlight .sh, .highlight .sx, .highlight .s1 {
+  color: #a6e22e;
+}
+.highlight .sr {
+  color: #a1efe4;
+}
+.highlight .si {
+  color: #cc6633;
+}
+.highlight .se {
+  color: #cc6633;
+}
+.highlight .nn {
+  color: #f4bf75;
+}
+.highlight .nc {
+  color: #f4bf75;
+}
+.highlight .no {
+  color: #f4bf75;
+}
+.highlight .na {
+  color: #66d9ef;
+}
+.highlight .m, .highlight .mf, .highlight .mh, .highlight .mi, .highlight .il, .highlight .mo, .highlight .mb, .highlight .mx {
+  color: #a6e22e;
+}
+.highlight .ss {
+  color: #a6e22e;
+}
+    </style>
+    <link href="stylesheets/screen.css" rel="stylesheet" media="screen" />
+    <link href="stylesheets/print.css" rel="stylesheet" media="print" />
+      <script src="javascripts/all.js"></script>
+  </head>
+
+  <body class="index" data-languages="[&quot;shell&quot;,&quot;javascript&quot;]">
+    <a href="#" id="nav-button">
+      <span>
+        NAV
+        <img src="images/navbar.png" alt="Navbar" />
+      </span>
+    </a>
+    <div class="tocify-wrapper">
+        <div class="lang-selector">
+              <a href="#" data-language-name="shell">shell</a>
+              <a href="#" data-language-name="javascript">javascript</a>
+        </div>
+        <div class="search">
+          <input type="text" class="search" id="input-search" placeholder="Search">
+        </div>
+        <ul class="search-results"></ul>
+      <div id="toc">
+      </div>
+        <ul class="toc-footer">
+            <li><a href='https://github.com/tripit/slate'>Powered by Slate</a></li>
+        </ul>
+    </div>
+    <div class="page-wrapper">
+      <div class="dark-box"></div>
+      <div class="content">
+        <h1 id="wst-p">Wstęp</h1>
+
+<blockquote>
+<p>http://api.smog.info.pl</p>
+</blockquote>
+
+<p>SmogAPI to REST API zawierające listę pomiarów powietrza z całej Polski, które powstało aby ułatwić developerom (i innym zainteresowanym) dostęp do danych o jakości w powietrza w Polsce. SmogAPI agreguje dane z dostępnych źródeł i prezentuje je w formie prostego i <a href="#skalowalno">skalowalnego</a> API nawet wtedy kiedy źródła danych są obciążone lub niedostępne.</p>
+
+<h1 id="o-api">O API</h1>
+
+<h2 id="format-odpowiedzi">Format odpowiedzi</h2>
+
+<p>SmogAPI prezentuje dane w formacie <code class="prettyprint">hal+json</code> ponieważ ułatwia on eksplorowanie API. Więcej informacji o formacie można znaleźć tu: <a href="https://en.wikipedia.org/wiki/Hypertext_Application_Language">Hypertext Application Language</a> lub w poniższej dokumentacji.</p>
+
+<h2 id="wersjonowanie">Wersjonowanie</h2>
+
+<p>Aktualnie SmogAPI znajduje się w fazie beta. Oznacza to, że mogą jeszcze nastąpić zmiany zasugerowane przez beta testerów.</p>
+
+<p>Po fazie beta nie będą wprowadzane tzw. <em>breaking changes</em> czyli zmiany, które mogą uszkodzić istniejące integracje (usunięcie pola z obiektu, zmiana nazwy pola, etc). Natomiast mogą pojawić się nowe pola w istniejących obiektach lub nowe endpointy.</p>
+
+<h2 id="dobre-praktyki">Dobre praktyki</h2>
+
+<ul>
+<li>Mimo że SmogAPI udostępniane jest bez opłat i bez limitu zapytań zalecane jest o cacheowanie danych na własnym serwerze lub urządzeniu użytkownika. Wskazania starsze niż kilka godzin prawdopodobnie już się nie zmienią.</li>
+<li>Jeśli korzystasz z tego API umieść informację o tym w swojej aplikacji lub na swojej stronie. Nie jest to wymagane ale to miłe. Bądź miły!</li>
+</ul>
+
+<h2 id="znane-problemy">Znane problemy</h2>
+
+<ul>
+<li>Ze względu na użytą technologię zapytania do SmogAPI nie mogą kończyć się znakiem ukośnika: <code class="prettyprint">/</code>. Np. endpoint <code class="prettyprint">/cities</code> zwróci listę miast natomiast <code class="prettyprint">/cities/</code> zwróci błąd.</li>
+</ul>
+
+<h2 id="skalowalno">Skalowalność</h2>
+
+<p>Aktualna architektura chmurowa (S3/CloudFront) SmogAPI pozwala na obsługę liczby zapytań zdecydowanie przekraczająej obecne zapotrzebowanie.</p>
+
+<h2 id="dost-p-z-innych-domen">Dostęp z innych domen</h2>
+
+<p>Istnieje możliwość dostępu do SmogAPI z aplikacji webowych w innych domenach (<a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Access_control_CORS">CORS</a>). API zwraca odpowiednie nagłówki HTTP które to umożliwiają.</p>
+
+<h2 id="dost-p-przez-https">Dostęp przez HTTPS</h2>
+
+<p>Należy korzystać z protokołu HTTP ponieważ SmogAPI zawiera publicznie dostępne dane. Adres HTTP:</p>
+
+<p><code class="prettyprint">http://api.smog.info.pl</code></p>
+
+<p>W szczególnych przypadkach (np. gdy potrzebny jest dostęp do SmogAPI z aplikacji webowej serwowanej przez <code class="prettyprint">https</code>) proszę korzystać z tego adresu:</p>
+
+<p><code class="prettyprint">https://d2znc3bc4jn9za.cloudfront.net</code></p>
+
+<h2 id="plany">Plany</h2>
+
+<ul>
+<li>Więcej źródeł danych.</li>
+<li>Dostęp do prognoz przez API.</li>
+<li>Umożliwienie udostępniania wyników posiadaczom przydomowych urządzeń pomiarowych.</li>
+</ul>
+
+<h2 id="autor">Autor</h2>
+
+<p>Bartek Nowotarski <small><a href="https://twitter.com/bartn_">Twitter</a> <a href="https://pl.linkedin.com/in/bartlomiejnowotarski">LinkedIn</a></small></p>
+
+<h1 id="miasta">Miasta</h1>
+
+<h2 id="obiekt-city">Obiekt <code class="prettyprint">city</code></h2>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"_links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"self"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cities/krakow"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"stations"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cities/krakow/stations"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"krakow"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Kraków"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>Obiekt <code class="prettyprint">city</code> zawiera informacje o pojedynczym mieście. </p>
+
+<h3 id="opis-p-l">Opis pól</h3>
+
+<table><thead>
+<tr>
+<th>Pole</th>
+<th>Opis</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">id</code></td>
+<td>ID miasta</td>
+</tr>
+<tr>
+<td><code class="prettyprint">name</code></td>
+<td>Nazwa miasta</td>
+</tr>
+<tr>
+<td><code class="prettyprint">_links.self</code></td>
+<td>Relatywny link do samego siebie</td>
+</tr>
+<tr>
+<td><code class="prettyprint">_links.stations</code></td>
+<td>Relatywny link do listy stacji pomiarowych w danym mieście</td>
+</tr>
+</tbody></table>
+
+<h2 id="lista-miast">Lista miast</h2>
+<pre class="highlight shell"><code>curl <span class="s2">"http://api.smog.info.pl/cities"</span>
+</code></pre><pre class="highlight javascript"><code><span class="kd">var</span> <span class="nx">axios</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'axios'</span><span class="p">);</span>
+
+<span class="nx">axios</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'http://api.smog.info.pl/cities'</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">response</span><span class="p">.</span><span class="nx">data</span><span class="p">);</span>
+  <span class="p">});</span>
+</code></pre>
+<blockquote>
+<p>Przykładowa odpowiedź API:</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"_links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"self"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cities"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nt">"_embedded"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"records"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"_links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nt">"self"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cities/augustow"</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nt">"stations"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cities/augustow/stations"</span><span class="w">
+          </span><span class="p">}</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"augustow"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Augustów"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"_links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nt">"self"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cities/belsk-duzy"</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nt">"stations"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cities/belsk-duzy/stations"</span><span class="w">
+          </span><span class="p">}</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"belsk-duzy"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Belsk Duży"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"_links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nt">"self"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cities/biala-podlaska"</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nt">"stations"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cities/biala-podlaska/stations"</span><span class="w">
+          </span><span class="p">}</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"biala-podlaska"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Biała Podlaska"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="err">//</span><span class="w"> </span><span class="err">....</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>Zapytanie do tego endpointu zwróci listę miast dostępnych przez SmogAPI.</p>
+
+<h3 id="zapytanie">Zapytanie</h3>
+
+<p><code class="prettyprint">GET http://api.smog.info.pl/cities</code></p>
+
+<h3 id="odpowied">Odpowiedź</h3>
+
+<table><thead>
+<tr>
+<th>Pole</th>
+<th>Opis</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">_links.self</code></td>
+<td>Relatywny link do samego siebie</td>
+</tr>
+<tr>
+<td><code class="prettyprint">_embedded.records</code></td>
+<td>Lista obiektów <a href="#obiekt-city"><code class="prettyprint">city</code></a></td>
+</tr>
+</tbody></table>
+
+<h2 id="pojedyncze-miasto">Pojedyncze miasto</h2>
+<pre class="highlight shell"><code>curl <span class="s2">"http://api.smog.info.pl/cities/krakow"</span>
+</code></pre><pre class="highlight javascript"><code><span class="kd">var</span> <span class="nx">axios</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'axios'</span><span class="p">);</span>
+
+<span class="kd">var</span> <span class="nx">cityId</span> <span class="o">=</span> <span class="s1">'krakow'</span><span class="p">;</span>
+
+<span class="nx">axios</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'http://api.smog.info.pl/cities/'</span><span class="o">+</span><span class="nx">cityId</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">response</span><span class="p">.</span><span class="nx">data</span><span class="p">);</span>
+  <span class="p">});</span>
+</code></pre>
+<blockquote>
+<p>Przykładowa odpowiedź API:</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"_links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"self"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cities/krakow"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"stations"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cities/krakow/stations"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"krakow"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Kraków"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>Zapytanie do tego endpointu zwróci informację o konkretnym mieście (obiekt <a href="#obiekt-city"><code class="prettyprint">city</code></a>).</p>
+
+<h3 id="zapytanie">Zapytanie</h3>
+
+<p><code class="prettyprint">GET http://api.smog.info.pl/cities/{city}</code></p>
+
+<h3 id="parametry-url">Parametry URL</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Opis</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">{city}</code></td>
+<td>ID miasta</td>
+</tr>
+</tbody></table>
+
+<h3 id="odpowied">Odpowiedź</h3>
+
+<p>Zobacz: obiekt <a href="#obiekt-city"><code class="prettyprint">city</code></a>.</p>
+
+<h1 id="stacje-pomiarowe">Stacje pomiarowe</h1>
+
+<h2 id="obiekt-station">Obiekt <code class="prettyprint">station</code></h2>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"_links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"self"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cities/krakow/stations/dietla"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"city"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cities/krakow"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"measurementsLatest"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cities/krakow/stations/dietla/measurements"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"measurements"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cities/krakow/stations/dietla/measurements/{date}"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"templated"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"dietla"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ul. Dietla"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"city"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Kraków"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>Obiekt <code class="prettyprint">station</code> zawiera informacje o stacji pomiarowej. </p>
+
+<h3 id="opis-p-l">Opis pól</h3>
+
+<table><thead>
+<tr>
+<th>Pole</th>
+<th>Opis</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">id</code></td>
+<td>ID stacji</td>
+</tr>
+<tr>
+<td><code class="prettyprint">address</code></td>
+<td>Adres pod którym znajduje się stacja.</td>
+</tr>
+<tr>
+<td><code class="prettyprint">name</code></td>
+<td>Nazwa miasta</td>
+</tr>
+<tr>
+<td><code class="prettyprint">_links.self</code></td>
+<td>Relatywny link do samego siebie</td>
+</tr>
+<tr>
+<td><code class="prettyprint">_links.city</code></td>
+<td>Relatywny link do miasta</td>
+</tr>
+<tr>
+<td><code class="prettyprint">_links.measurementsLatest</code></td>
+<td>Relatywny link do ostatnich pomiarów</td>
+</tr>
+<tr>
+<td><code class="prettyprint">_links.measurements</code></td>
+<td>Relatywny link do pomiarów z danego dnia</td>
+</tr>
+</tbody></table>
+
+<h2 id="lista-stacji-w-danym-mie-cie">Lista stacji w danym mieście</h2>
+<pre class="highlight shell"><code>curl <span class="s2">"http://api.smog.info.pl/cities/{city}/stations"</span>
+</code></pre><pre class="highlight javascript"><code><span class="kd">var</span> <span class="nx">axios</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'axios'</span><span class="p">);</span>
+
+<span class="kd">var</span> <span class="nx">cityId</span> <span class="o">=</span> <span class="s1">'krakow'</span><span class="p">;</span>
+
+<span class="nx">axios</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'http://api.smog.info.pl/cities/'</span><span class="o">+</span><span class="nx">cityId</span><span class="o">+</span><span class="s1">'/stations'</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">response</span><span class="p">.</span><span class="nx">data</span><span class="p">);</span>
+  <span class="p">});</span>
+</code></pre>
+<blockquote>
+<p>Przykładowa odpowiedź API:</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"_links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"self"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cities/krakow/stations"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"city"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cities/krakow"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nt">"_embedded"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"records"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"_links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nt">"self"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cities/krakow/stations/bujaka"</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nt">"city"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cities/krakow"</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nt">"measurementsLatest"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cities/krakow/stations/bujaka/measurements"</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nt">"measurements"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cities/krakow/stations/bujaka/measurements/{date}"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"templated"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+          </span><span class="p">}</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bujaka"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ul. Bujaka"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"city"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Kraków"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"_links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nt">"self"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cities/krakow/stations/bulwarowa"</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nt">"city"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cities/krakow"</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nt">"measurementsLatest"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cities/krakow/stations/bulwarowa/measurements"</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nt">"measurements"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cities/krakow/stations/bulwarowa/measurements/{date}"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"templated"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+          </span><span class="p">}</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bulwarowa"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ul. Bulwarowa"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"city"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Kraków"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"_links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nt">"self"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cities/krakow/stations/dietla"</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nt">"city"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cities/krakow"</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nt">"measurementsLatest"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cities/krakow/stations/dietla/measurements"</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nt">"measurements"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cities/krakow/stations/dietla/measurements/{date}"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"templated"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+          </span><span class="p">}</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"dietla"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ul. Dietla"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"city"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Kraków"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"_links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nt">"self"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cities/krakow/stations/krasinskiego"</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nt">"city"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cities/krakow"</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nt">"measurementsLatest"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cities/krakow/stations/krasinskiego/measurements"</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nt">"measurements"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cities/krakow/stations/krasinskiego/measurements/{date}"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"templated"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+          </span><span class="p">}</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"krasinskiego"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"al. Krasińskiego"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"city"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Kraków"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"_links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nt">"self"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cities/krakow/stations/piastow"</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nt">"city"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cities/krakow"</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nt">"measurementsLatest"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cities/krakow/stations/piastow/measurements"</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nt">"measurements"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cities/krakow/stations/piastow/measurements/{date}"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"templated"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+          </span><span class="p">}</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"piastow"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"os. Piastów"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"city"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Kraków"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"_links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nt">"self"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cities/krakow/stations/telimeny"</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nt">"city"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cities/krakow"</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nt">"measurementsLatest"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cities/krakow/stations/telimeny/measurements"</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nt">"measurements"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cities/krakow/stations/telimeny/measurements/{date}"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"templated"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+          </span><span class="p">}</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"telimeny"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ul. Telimeny 9"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"city"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Kraków"</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>Zapytanie do tego endpointu zwróci listę stacji pomiarowych dla danego miasta dostępnych przez SmogAPI.</p>
+
+<h3 id="zapytanie">Zapytanie</h3>
+
+<p><code class="prettyprint">GET http://api.smog.info.pl/cities/{city}/stations</code></p>
+
+<h3 id="parametry-url">Parametry URL</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Opis</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">{city}</code></td>
+<td>ID miasta</td>
+</tr>
+</tbody></table>
+
+<h3 id="odpowied">Odpowiedź</h3>
+
+<table><thead>
+<tr>
+<th>Pole</th>
+<th>Opis</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">_links.self</code></td>
+<td>Relatywny link do samego siebie</td>
+</tr>
+<tr>
+<td><code class="prettyprint">_links.city</code></td>
+<td>Relatywny link do miasta</td>
+</tr>
+<tr>
+<td><code class="prettyprint">_embedded.records</code></td>
+<td>Lista obiektów <a href="#obiekt-station"><code class="prettyprint">station</code></a></td>
+</tr>
+</tbody></table>
+
+<h2 id="pojedyncza-stacja-pomiarowa">Pojedyncza stacja pomiarowa</h2>
+<pre class="highlight shell"><code>curl <span class="s2">"http://api.smog.info.pl/cities/krakow/station/dietla"</span>
+</code></pre><pre class="highlight javascript"><code><span class="kd">var</span> <span class="nx">axios</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'axios'</span><span class="p">);</span>
+
+<span class="kd">var</span> <span class="nx">cityId</span> <span class="o">=</span> <span class="s1">'krakow'</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">stationId</span> <span class="o">=</span> <span class="s1">'dietla'</span><span class="p">;</span>
+
+<span class="nx">axios</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'http://api.smog.info.pl/cities/'</span><span class="o">+</span><span class="nx">cityId</span><span class="o">+</span><span class="s1">'/station/'</span><span class="o">+</span><span class="nx">stationId</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">response</span><span class="p">.</span><span class="nx">data</span><span class="p">);</span>
+  <span class="p">});</span>
+</code></pre>
+<blockquote>
+<p>Przykładowa odpowiedź API:</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"_links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"self"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cities/krakow/stations/dietla"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"city"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cities/krakow"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"measurementsLatest"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cities/krakow/stations/dietla/measurements"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"measurements"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cities/krakow/stations/dietla/measurements/{date}"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"templated"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"dietla"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ul. Dietla"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"city"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Kraków"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>Zapytanie do tego endpointu zwróci informację o konkretnej stacji pomiarowej (obiekt <a href="#obiekt-station"><code class="prettyprint">station</code></a>).</p>
+
+<h3 id="zapytanie">Zapytanie</h3>
+
+<p><code class="prettyprint">GET http://api.smog.info.pl/cities/{city}/station/{station}</code></p>
+
+<h3 id="parametry-url">Parametry URL</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Opis</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">{city}</code></td>
+<td>ID miasta</td>
+</tr>
+<tr>
+<td><code class="prettyprint">{station}</code></td>
+<td>ID stacji pomiarowej</td>
+</tr>
+</tbody></table>
+
+<h3 id="odpowied">Odpowiedź</h3>
+
+<p>Zobacz: obiekt <a href="#obiekt-station"><code class="prettyprint">station</code></a>.</p>
+
+<h1 id="pomiary">Pomiary</h1>
+
+<h2 id="obiekt-measurement">Obiekt <code class="prettyprint">measurement</code></h2>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"_links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"city"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cities/warszawa"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"station"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cities/warszawa/stations/niepodleglosci"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"source"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://acme.com/ahcgahsueyha"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nt">"measuredAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2017-01-31T11:00:00+01:00"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"pm10"</span><span class="p">:</span><span class="w"> </span><span class="mf">82.4</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"pm25"</span><span class="p">:</span><span class="w"> </span><span class="mf">62.7</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"o3"</span><span class="p">:</span><span class="w"> </span><span class="mi">13</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"no2"</span><span class="p">:</span><span class="w"> </span><span class="mf">63.2</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"so2"</span><span class="p">:</span><span class="w"> </span><span class="mi">70</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"c6h6"</span><span class="p">:</span><span class="w"> </span><span class="mf">4.4</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"co"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.6</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"source"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ACME"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"contact"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0123456"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>Obiekt <code class="prettyprint">measurement</code> zawiera informacje o pojedynczym pomiarze. </p>
+
+<h3 id="opis-p-l">Opis pól</h3>
+
+<table><thead>
+<tr>
+<th>Pole</th>
+<th>Opis</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">measuredAt</code></td>
+<td>Czas pomiaru w formacie RFC 3339</td>
+</tr>
+<tr>
+<td><code class="prettyprint">pm10</code></td>
+<td>Wyniki pomiaru stężenia pyłu PM10 w µg/m<sup>3</sup></td>
+</tr>
+<tr>
+<td><code class="prettyprint">pm25</code></td>
+<td>Wyniki pomiaru stężenia pyłu PM2.5 w µg/m<sup>3</sup></td>
+</tr>
+<tr>
+<td><code class="prettyprint">o3</code></td>
+<td>Wyniki pomiaru stężenia ozonu w µg/m<sup>3</sup></td>
+</tr>
+<tr>
+<td><code class="prettyprint">no2</code></td>
+<td>Wyniki pomiaru stężenia dwutlenku azotu w µg/m<sup>3</sup></td>
+</tr>
+<tr>
+<td><code class="prettyprint">so2</code></td>
+<td>Wyniki pomiaru stężenia dwutlenku siarki w µg/m<sup>3</sup></td>
+</tr>
+<tr>
+<td><code class="prettyprint">c6h6</code></td>
+<td>Wyniki pomiaru stężenia benzenu w µg/m<sup>3</sup></td>
+</tr>
+<tr>
+<td><code class="prettyprint">co</code></td>
+<td>Wyniki pomiaru stężenia tlenku węgla w µg/m<sup>3</sup></td>
+</tr>
+<tr>
+<td><code class="prettyprint">source.name</code></td>
+<td>Nazwa organizacji będącej źródłem danych</td>
+</tr>
+<tr>
+<td><code class="prettyprint">source.contact</code></td>
+<td>Dane kontaktowe organizacji będącej źródłem danych</td>
+</tr>
+<tr>
+<td><code class="prettyprint">_links.city</code></td>
+<td>Relatywny link do miasta</td>
+</tr>
+<tr>
+<td><code class="prettyprint">_links.station</code></td>
+<td>Relatywny link do stacji pomiarowej</td>
+</tr>
+<tr>
+<td><code class="prettyprint">_links.source</code></td>
+<td>Absolutny link do źródła danych</td>
+</tr>
+</tbody></table>
+
+<aside class="notice">
+Niektóre pola z wynikami pomiarów (pola <code>pm10</code>, <code>pm25</code>, <code>o3</code>, <code>no2</code>, <code>so2</code>, <code>c6h6</code>, <code>co</code>) mogą być nieobecne jeśli dana stacja nie prowadzi tych pomiarów lub nie są one jeszcze dostępne.
+</aside>
+
+<h2 id="ostatnie-pomiary-z-danej-stacji">Ostatnie pomiary z danej stacji</h2>
+<pre class="highlight shell"><code>curl <span class="s2">"http://api.smog.info.pl/cities/krakow/stations/dietla/measurements"</span>
+</code></pre><pre class="highlight javascript"><code><span class="kd">var</span> <span class="nx">axios</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'axios'</span><span class="p">);</span>
+
+<span class="kd">var</span> <span class="nx">cityId</span> <span class="o">=</span> <span class="s1">'krakow'</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">stationId</span> <span class="o">=</span> <span class="s1">'dietla'</span><span class="p">;</span>
+
+<span class="nx">axios</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'http://api.smog.info.pl/cities/'</span><span class="o">+</span><span class="nx">cityId</span><span class="o">+</span><span class="s1">'/stations/'</span><span class="o">+</span><span class="nx">stationId</span><span class="o">+</span><span class="s1">'/measurements'</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">response</span><span class="p">.</span><span class="nx">data</span><span class="p">);</span>
+  <span class="p">});</span>
+</code></pre>
+<blockquote>
+<p>Przykładowa odpowiedź API:</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"_links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"self"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cities/krakow/stations/dietla/measurements"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"prev"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cities/krakow/stations/dietla/measurements/{date}"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"templated"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"city"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cities/krakow"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"station"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cities/krakow/stations/dietla"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nt">"_embedded"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"records"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"_links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nt">"city"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cities/krakow"</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nt">"station"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cities/krakow/stations/dietla"</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nt">"source"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://powietrze.gios.gov.pl/pjp/current/station_details/table/10121/3/1"</span><span class="w">
+          </span><span class="p">}</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"measuredAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2017-01-31T09:00:00+01:00"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"no2"</span><span class="p">:</span><span class="w"> </span><span class="mf">90.8</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"source"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Główny Inspektorat Ochrony Środowiska"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"contact"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ul. Wawelska 52/54, 00-922 Warszawa, Tel. (0 22) 36-92-208"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"_links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nt">"city"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cities/krakow"</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nt">"station"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cities/krakow/stations/dietla"</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nt">"source"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://powietrze.gios.gov.pl/pjp/current/station_details/table/10121/3/1"</span><span class="w">
+          </span><span class="p">}</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"measuredAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2017-01-31T08:00:00+01:00"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"pm10"</span><span class="p">:</span><span class="w"> </span><span class="mf">203.9</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"no2"</span><span class="p">:</span><span class="w"> </span><span class="mf">75.6</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"source"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Główny Inspektorat Ochrony Środowiska"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"contact"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ul. Wawelska 52/54, 00-922 Warszawa, Tel. (0 22) 36-92-208"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"_links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nt">"city"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cities/krakow"</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nt">"station"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cities/krakow/stations/dietla"</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nt">"source"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://powietrze.gios.gov.pl/pjp/current/station_details/table/10121/3/1"</span><span class="w">
+          </span><span class="p">}</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"measuredAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2017-01-31T07:00:00+01:00"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"pm10"</span><span class="p">:</span><span class="w"> </span><span class="mf">197.9</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"no2"</span><span class="p">:</span><span class="w"> </span><span class="mf">69.2</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"source"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Główny Inspektorat Ochrony Środowiska"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"contact"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ul. Wawelska 52/54, 00-922 Warszawa, Tel. (0 22) 36-92-208"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>Zapytanie do tego endpointu zwróci listę ostatnich (max. 24) pomiarów z danej stacji pomiarowej. Lista będzie posortowana po czasie pomiaru, od najnowszych.</p>
+
+<h3 id="zapytanie">Zapytanie</h3>
+
+<p><code class="prettyprint">GET http://api.smog.info.pl/cities/{city}/station/{station}/measurements</code></p>
+
+<h3 id="parametry-url">Parametry URL</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Opis</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">{city}</code></td>
+<td>ID miasta</td>
+</tr>
+<tr>
+<td><code class="prettyprint">{station}</code></td>
+<td>ID stacji</td>
+</tr>
+</tbody></table>
+
+<h3 id="odpowied">Odpowiedź</h3>
+
+<table><thead>
+<tr>
+<th>Pole</th>
+<th>Opis</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">_links.self</code></td>
+<td>Relatywny link do samego siebie</td>
+</tr>
+<tr>
+<td><code class="prettyprint">_links.prev</code></td>
+<td>Relatywny link do listy pomiarów z poprzednich dni</td>
+</tr>
+<tr>
+<td><code class="prettyprint">_links.city</code></td>
+<td>Relatywny link do miasta</td>
+</tr>
+<tr>
+<td><code class="prettyprint">_links.station</code></td>
+<td>Relatywny link do stacji</td>
+</tr>
+<tr>
+<td><code class="prettyprint">_embedded.records</code></td>
+<td>Lista obiektów <a href="#obiekt-measurement"><code class="prettyprint">measurement</code></a></td>
+</tr>
+</tbody></table>
+
+<aside class="notice">
+Zauważ, że pierwszy na liście pomiarów (&ldquo;Przykładowa odpowiedź API&rdquo; po prawej) nie zawiera wskazania <code>pm10</code> ponieważ nie jest ono jeszcze dostępne dla tej stacji.
+</aside>
+
+<h2 id="lista-pomiar-w-z-danego-dnia">Lista pomiarów z danego dnia</h2>
+<pre class="highlight shell"><code>curl <span class="s2">"http://api.smog.info.pl/cities/krakow/stations/dietla/measurements/2017-01-30"</span>
+</code></pre><pre class="highlight javascript"><code><span class="kd">var</span> <span class="nx">axios</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'axios'</span><span class="p">);</span>
+
+<span class="kd">var</span> <span class="nx">cityId</span> <span class="o">=</span> <span class="s1">'krakow'</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">stationId</span> <span class="o">=</span> <span class="s1">'dietla'</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">date</span> <span class="o">=</span> <span class="s1">'2017-01-30'</span><span class="p">;</span>
+
+<span class="nx">axios</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'http://api.smog.info.pl/cities/'</span><span class="o">+</span><span class="nx">cityId</span><span class="o">+</span><span class="s1">'/stations/'</span><span class="o">+</span><span class="nx">stationId</span><span class="o">+</span><span class="s1">'/measurements/'</span><span class="o">+</span><span class="nx">date</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">response</span><span class="p">.</span><span class="nx">data</span><span class="p">);</span>
+  <span class="p">});</span>
+</code></pre>
+<blockquote>
+<p>Przykładowa odpowiedź API:</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"_links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"self"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cities/krakow/stations/dietla/measurements/2017-01-30"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"next"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cities/krakow/stations/dietla/measurements/2017-01-31"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"prev"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cities/krakow/stations/dietla/measurements/2017-01-29"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"city"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cities/krakow"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"station"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cities/krakow/stations/dietla"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nt">"_embedded"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"records"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"_links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nt">"city"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cities/krakow"</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nt">"station"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cities/krakow/stations/dietla"</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nt">"source"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://powietrze.gios.gov.pl/pjp/current/station_details/table/10121/3/0"</span><span class="w">
+          </span><span class="p">}</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"measuredAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2017-01-30T00:00:00+01:00"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"pm10"</span><span class="p">:</span><span class="w"> </span><span class="mi">313</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"no2"</span><span class="p">:</span><span class="w"> </span><span class="mf">89.4</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"source"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Główny Inspektorat Ochrony Środowiska"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"contact"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ul. Wawelska 52/54, 00-922 Warszawa, Tel. (0 22) 36-92-208"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"_links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nt">"city"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cities/krakow"</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nt">"station"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cities/krakow/stations/dietla"</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nt">"source"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://powietrze.gios.gov.pl/pjp/current/station_details/table/10121/3/0"</span><span class="w">
+          </span><span class="p">}</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"measuredAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2017-01-30T01:00:00+01:00"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"pm10"</span><span class="p">:</span><span class="w"> </span><span class="mf">322.1</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"no2"</span><span class="p">:</span><span class="w"> </span><span class="mf">79.7</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"source"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Główny Inspektorat Ochrony Środowiska"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"contact"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ul. Wawelska 52/54, 00-922 Warszawa, Tel. (0 22) 36-92-208"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"_links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nt">"city"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cities/krakow"</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nt">"station"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cities/krakow/stations/dietla"</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nt">"source"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://powietrze.gios.gov.pl/pjp/current/station_details/table/10121/3/0"</span><span class="w">
+          </span><span class="p">}</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"measuredAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2017-01-30T02:00:00+01:00"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"pm10"</span><span class="p">:</span><span class="w"> </span><span class="mf">335.3</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"no2"</span><span class="p">:</span><span class="w"> </span><span class="mf">71.2</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"source"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Główny Inspektorat Ochrony Środowiska"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"contact"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ul. Wawelska 52/54, 00-922 Warszawa, Tel. (0 22) 36-92-208"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="err">//</span><span class="w"> </span><span class="err">...</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"_links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nt">"city"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cities/krakow"</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nt">"station"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cities/krakow/stations/dietla"</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nt">"source"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://powietrze.gios.gov.pl/pjp/current/station_details/table/10121/3/0"</span><span class="w">
+          </span><span class="p">}</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"measuredAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2017-01-30T22:00:00+01:00"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"pm10"</span><span class="p">:</span><span class="w"> </span><span class="mf">352.4</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"no2"</span><span class="p">:</span><span class="w"> </span><span class="mf">144.6</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"source"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Główny Inspektorat Ochrony Środowiska"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"contact"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ul. Wawelska 52/54, 00-922 Warszawa, Tel. (0 22) 36-92-208"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"_links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nt">"city"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cities/krakow"</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nt">"station"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cities/krakow/stations/dietla"</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nt">"source"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://powietrze.gios.gov.pl/pjp/current/station_details/table/10121/3/0"</span><span class="w">
+          </span><span class="p">}</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"measuredAt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2017-01-30T23:00:00+01:00"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"pm10"</span><span class="p">:</span><span class="w"> </span><span class="mf">313.2</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"no2"</span><span class="p">:</span><span class="w"> </span><span class="mi">115</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"source"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Główny Inspektorat Ochrony Środowiska"</span><span class="p">,</span><span class="w">
+          </span><span class="nt">"contact"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ul. Wawelska 52/54, 00-922 Warszawa, Tel. (0 22) 36-92-208"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>Zapytanie do tego endpointu zwróci listę wszystkich dostępnych pomiarów z danej stacji pomiarowej z danego dnia. Lista będzie posortowana po godzinie pomiaru rosnąco.</p>
+
+<h3 id="zapytanie">Zapytanie</h3>
+
+<p><code class="prettyprint">GET http://api.smog.info.pl/cities/{city}/station/{station}/measurements/{date}</code></p>
+
+<h3 id="parametry-url">Parametry URL</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Opis</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">{city}</code></td>
+<td>ID miasta</td>
+</tr>
+<tr>
+<td><code class="prettyprint">{station}</code></td>
+<td>ID stacji</td>
+</tr>
+<tr>
+<td><code class="prettyprint">{date}</code></td>
+<td>Data w formacie <code class="prettyprint">YYYY-MM-DD</code></td>
+</tr>
+</tbody></table>
+
+<h3 id="odpowied">Odpowiedź</h3>
+
+<table><thead>
+<tr>
+<th>Pole</th>
+<th>Opis</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">_links.self</code></td>
+<td>Relatywny link do samego siebie</td>
+</tr>
+<tr>
+<td><code class="prettyprint">_links.next</code></td>
+<td>Relatywny link do listy pomiarów z kolejnego dnia (może jeszcze nie istnieć!)</td>
+</tr>
+<tr>
+<td><code class="prettyprint">_links.prev</code></td>
+<td>Relatywny link do listy pomiarów z poprzedniego dnia (może nie istnieć)</td>
+</tr>
+<tr>
+<td><code class="prettyprint">_links.city</code></td>
+<td>Relatywny link do miasta</td>
+</tr>
+<tr>
+<td><code class="prettyprint">_links.station</code></td>
+<td>Relatywny link do stacji</td>
+</tr>
+<tr>
+<td><code class="prettyprint">_embedded.records</code></td>
+<td>Lista obiektów <a href="#obiekt-measurement"><code class="prettyprint">measurement</code></a></td>
+</tr>
+</tbody></table>
+
+          <h1 id="zg-aszanie-b-d-w">Zgłaszanie błędów</h1>
+
+<p>Błędy związane z API: <a href="https://github.com/smogapi/api/issues">https://github.com/smogapi/api/issues</a></p>
+
+<p>Błędy związane z dokumentacją: <a href="https://github.com/smogapi/docs/issues">https://github.com/smogapi/docs/issues</a></p>
+
+      </div>
+      <div class="dark-box">
+          <div class="lang-selector">
+                <a href="#" data-language-name="shell">shell</a>
+                <a href="#" data-language-name="javascript">javascript</a>
+          </div>
+      </div>
+    </div>
+  </body>
+</html>
