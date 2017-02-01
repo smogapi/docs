@@ -35,6 +35,7 @@ Po fazie beta nie będą wprowadzane tzw. _breaking changes_ czyli zmiany, któr
 ## Dobre praktyki
 
 * Mimo że SmogAPI udostępniane jest bez opłat i bez limitu zapytań zalecane jest o cacheowanie danych na własnym serwerze lub urządzeniu użytkownika. Wskazania starsze niż kilka godzin prawdopodobnie już się nie zmienią.
+* Jeśli nie korzystasz z API przez przeglądarkę dołącz do swojego zapytania nagłówek HTTP: [`Referer`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referer). Jako URL podaj link do twojej appki w Google Play albo App Store. Dane posłużą do celów statystycznych.
 * Jeśli korzystasz z tego API umieść informację o tym w swojej aplikacji lub na swojej stronie. Nie jest to wymagane ale to miłe. Bądź miły!
 
 ## Znane problemy
