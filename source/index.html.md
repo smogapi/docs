@@ -58,7 +58,7 @@ Należy korzystać z protokołu HTTP ponieważ SmogAPI zawiera publicznie dostę
 
 W szczególnych przypadkach (np. gdy potrzebny jest dostęp do SmogAPI z aplikacji webowej serwowanej przez `https`) proszę korzystać z tego adresu:
 
-`https://d2znc3bc4jn9za.cloudfront.net`
+`https://s3.eu-central-1.amazonaws.com/api.smog.info.pl`
 
 ## Plany
 
