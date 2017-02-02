@@ -616,13 +616,13 @@
 </tbody></table>
 
 <h2 id="pojedyncza-stacja-pomiarowa">Pojedyncza stacja pomiarowa</h2>
-<pre class="highlight shell"><code>curl <span class="s2">"http://api.smog.info.pl/cities/krakow/station/dietla"</span>
+<pre class="highlight shell"><code>curl <span class="s2">"http://api.smog.info.pl/cities/krakow/stations/dietla"</span>
 </code></pre><pre class="highlight javascript"><code><span class="kd">var</span> <span class="nx">axios</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'axios'</span><span class="p">);</span>
 
 <span class="kd">var</span> <span class="nx">cityId</span> <span class="o">=</span> <span class="s1">'krakow'</span><span class="p">;</span>
 <span class="kd">var</span> <span class="nx">stationId</span> <span class="o">=</span> <span class="s1">'dietla'</span><span class="p">;</span>
 
-<span class="nx">axios</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'http://api.smog.info.pl/cities/'</span><span class="o">+</span><span class="nx">cityId</span><span class="o">+</span><span class="s1">'/station/'</span><span class="o">+</span><span class="nx">stationId</span><span class="p">)</span>
+<span class="nx">axios</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'http://api.smog.info.pl/cities/'</span><span class="o">+</span><span class="nx">cityId</span><span class="o">+</span><span class="s1">'/stations/'</span><span class="o">+</span><span class="nx">stationId</span><span class="p">)</span>
   <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
     <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">response</span><span class="p">.</span><span class="nx">data</span><span class="p">);</span>
   <span class="p">});</span>
@@ -655,7 +655,7 @@
 
 <h3 id="zapytanie">Zapytanie</h3>
 
-<p><code class="prettyprint">GET http://api.smog.info.pl/cities/{city}/station/{station}</code></p>
+<p><code class="prettyprint">GET http://api.smog.info.pl/cities/{city}/stations/{station}</code></p>
 
 <h3 id="parametry-url">Parametry URL</h3>
 
@@ -876,7 +876,7 @@ Niektóre pola z wynikami pomiarów (pola <code>pm10</code>, <code>pm25</code>, 
 
 <h3 id="zapytanie">Zapytanie</h3>
 
-<p><code class="prettyprint">GET http://api.smog.info.pl/cities/{city}/station/{station}/measurements</code></p>
+<p><code class="prettyprint">GET http://api.smog.info.pl/cities/{city}/stations/{station}/measurements</code></p>
 
 <h3 id="parametry-url">Parametry URL</h3>
 
@@ -1075,7 +1075,7 @@ Zauważ, że pierwszy na liście pomiarów (&ldquo;Przykładowa odpowiedź API&r
 
 <h3 id="zapytanie">Zapytanie</h3>
 
-<p><code class="prettyprint">GET http://api.smog.info.pl/cities/{city}/station/{station}/measurements/{date}</code></p>
+<p><code class="prettyprint">GET http://api.smog.info.pl/cities/{city}/stations/{station}/measurements/{date}</code></p>
 
 <h3 id="parametry-url">Parametry URL</h3>
 
