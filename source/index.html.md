@@ -451,7 +451,7 @@ Pole | Opis
 ## Pojedyncza stacja pomiarowa
 
 ```shell
-curl "http://api.smog.info.pl/cities/krakow/station/dietla"
+curl "http://api.smog.info.pl/cities/krakow/stations/dietla"
 ```
 
 ```javascript
@@ -460,7 +460,7 @@ var axios = require('axios');
 var cityId = 'krakow';
 var stationId = 'dietla';
 
-axios.get('http://api.smog.info.pl/cities/'+cityId+'/station/'+stationId)
+axios.get('http://api.smog.info.pl/cities/'+cityId+'/stations/'+stationId)
   .then(function(response) {
     console.log(response.data);
   });
@@ -495,7 +495,7 @@ Zapytanie do tego endpointu zwróci informację o konkretnej stacji pomiarowej (
 
 ### Zapytanie
 
-`GET http://api.smog.info.pl/cities/{city}/station/{station}`
+`GET http://api.smog.info.pl/cities/{city}/stations/{station}`
 
 ### Parametry URL
 
@@ -671,7 +671,7 @@ Zapytanie do tego endpointu zwróci listę ostatnich (max. 24) pomiarów z danej
 
 ### Zapytanie
 
-`GET http://api.smog.info.pl/cities/{city}/station/{station}/measurements`
+`GET http://api.smog.info.pl/cities/{city}/stations/{station}/measurements`
 
 ### Parametry URL
 
@@ -846,7 +846,7 @@ Zapytanie do tego endpointu zwróci listę wszystkich dostępnych pomiarów z da
 
 ### Zapytanie
 
-`GET http://api.smog.info.pl/cities/{city}/station/{station}/measurements/{date}`
+`GET http://api.smog.info.pl/cities/{city}/stations/{station}/measurements/{date}`
 
 ### Parametry URL
 
