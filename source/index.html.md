@@ -26,11 +26,13 @@ SmogAPI to REST API zawierające listę pomiarów powietrza z całej Polski, kt�
 
 SmogAPI prezentuje dane w formacie `hal+json` ponieważ ułatwia on eksplorowanie API. Więcej informacji o formacie można znaleźć tu: [Hypertext Application Language](https://en.wikipedia.org/wiki/Hypertext_Application_Language) lub w poniższej dokumentacji.
 
-## Wersjonowanie
+## Lista zmian
 
 Aktualnie SmogAPI znajduje się w fazie beta. Oznacza to, że mogą jeszcze nastąpić zmiany zasugerowane przez beta testerów.
 
 Po fazie beta nie będą wprowadzane tzw. _breaking changes_ czyli zmiany, które mogą uszkodzić istniejące integracje (usunięcie pola z obiektu, zmiana nazwy pola, etc). Natomiast mogą pojawić się nowe pola w istniejących obiektach lub nowe endpointy.
+
+* 2017-02-05: Wyszukiwanie okolicznych stacji, dodano współrzędne geograficzne do obiektu `station`.
 
 ## Dobre praktyki
 
@@ -38,27 +40,23 @@ Po fazie beta nie będą wprowadzane tzw. _breaking changes_ czyli zmiany, któr
 * Jeśli nie korzystasz z API przez przeglądarkę dołącz do swojego zapytania nagłówek HTTP: [`Referer`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referer). Jako URL podaj link do twojej appki w Google Play albo App Store. Dane posłużą do celów statystycznych.
 * Jeśli korzystasz z tego API umieść informację o tym w swojej aplikacji lub na swojej stronie. Nie jest to wymagane ale to miłe. Bądź miły!
 
-## Znane problemy
-
-* Ze względu na użytą technologię zapytania do SmogAPI nie mogą kończyć się znakiem ukośnika: `/`. Np. endpoint `/cities` zwróci listę miast natomiast `/cities/` zwróci błąd.
-
 ## Skalowalność
 
-Aktualna architektura chmurowa (S3/CloudFront) SmogAPI pozwala na obsługę liczby zapytań zdecydowanie przekraczającej obecne zapotrzebowanie.
+Aktualna architektura chmurowa SmogAPI pozwala na obsługę liczby zapytań zdecydowanie przekraczającej obecne zapotrzebowanie.
 
 ## Dostęp z innych domen
 
 Istnieje możliwość dostępu do SmogAPI z aplikacji webowych w innych domenach ([CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/Access_control_CORS)). API zwraca odpowiednie nagłówki HTTP które to umożliwiają.
 
-## Dostęp przez HTTPS
+## HTTP vs HTTPS
 
-Należy korzystać z protokołu HTTP ponieważ SmogAPI zawiera publicznie dostępne dane. Adres HTTP:
+Dostęp do endpointa `/stations/nearby` powinien odbywać się przy użyciu bezpiecznego protokołu HTTPS ponieważ przesyłane są dane na temat lokalizacji użytkownika. Adres HTTPS:
+
+`https://api.smog.info.pl`
+
+W pozostałych przypadkach można korzystać z protokołu HTTP ponieważ SmogAPI zawiera publicznie dostępne dane. Adres HTTP:
 
 `http://api.smog.info.pl`
-
-W szczególnych przypadkach (np. gdy potrzebny jest dostęp do SmogAPI z aplikacji webowej serwowanej przez `https`) proszę korzystać z tego adresu:
-
-`https://s3.eu-central-1.amazonaws.com/api.smog.info.pl`
 
 ## Plany
 
@@ -254,7 +252,9 @@ Zobacz: obiekt [`city`](#obiekt-city).
   },
   "id": "dietla",
   "address": "ul. Dietla",
-  "city": "Kraków"
+  "city": "Kraków",
+  "latitude": 50.057447,
+  "longitude": 19.946008
 }
 ```
 
@@ -267,10 +267,89 @@ Pole | Opis
 `id` | ID stacji
 `address` | Adres pod którym znajduje się stacja.
 `name` | Nazwa miasta
+`latitude` | Szerokość geograficzna
+`longitude` | Długość geograficzna
 `_links.self` | Relatywny link do samego siebie
 `_links.city` | Relatywny link do miasta
 `_links.measurementsLatest` | Relatywny link do ostatnich pomiarów
 `_links.measurements` | Relatywny link do pomiarów z danego dnia
+
+## Lista okolicznych stacji
+
+```shell
+curl "http://api.smog.info.pl/stations/nearby?longitude=19.2226&latitude=49.6502"
+```
+
+```javascript
+var axios = require('axios');
+
+var longitude = '19.2226';
+var latitude = '49.6502';
+
+axios.get('http://api.smog.info.pl/stations/nearby?longitude='+longitude+'&latitude='+latitude)
+  .then(function(response) {
+    console.log(response.data);
+  });
+```
+
+> Przykładowa odpowiedź API:
+
+```json
+{
+  "_links": {
+    "self": {
+      "href": "/stations/nearby?longitude=19.2226\u0026latitude=49.6502"
+    }
+  },
+  "_embedded": {
+    "records": [
+      {
+        "_links": {
+          "self": {
+            "href": "/cities/zywiec/stations/kopernika"
+          },
+          "city": {
+            "href": "/cities/zywiec"
+          },
+          "measurementsLatest": {
+            "href": "/cities/zywiec/stations/kopernika/measurements"
+          },
+          "measurements": {
+            "href": "/cities/zywiec/stations/kopernika/measurements/{date}",
+            "templated": true
+          }
+        },
+        "id": "kopernika",
+        "address": "ul. Kopernika 83 a",
+        "city": "Żywiec",
+        "latitude": 49.671602,
+        "longitude": 19.234446
+      }
+    ]
+  }
+}
+```
+
+Zapytanie do tego endpointu zwróci listę stacji znajdujących się w promieniu 10km od punktu określonego przez parametry `longitude` i `latitude`. Lista będzie posortowana od najbliższych stacji i będzie zawierać maksymalnie 10 stacji.
+
+### Zapytanie
+
+`GET http://api.smog.info.pl/stations/nearby?longitude={longitude}&latitude={latitude}`
+
+### Parametry
+
+Parameter | Opis
+--------- | -------
+`{longitude}` | Długość geograficzna
+`{latitude}` | Szerokość geograficzna
+
+### Odpowiedź
+
+Pole | Opis
+--------- | -------
+`_links.self` | Relatywny link do samego siebie
+`_links.city` | Relatywny link do miasta
+`_embedded.records` | Lista obiektów [`station`](#obiekt-station)
 
 ## Lista stacji w danym mieście
 
@@ -321,7 +400,9 @@ axios.get('http://api.smog.info.pl/cities/'+cityId+'/stations')
         },
         "id": "bujaka",
         "address": "ul. Bujaka",
-        "city": "Kraków"
+        "city": "Kraków",
+        "latitude": 50.010575,
+        "longitude": 19.949189
       },
       {
         "_links": {
@@ -341,7 +422,9 @@ axios.get('http://api.smog.info.pl/cities/'+cityId+'/stations')
         },
         "id": "bulwarowa",
         "address": "ul. Bulwarowa",
-        "city": "Kraków"
+        "city": "Kraków",
+        "latitude": 50.069308,
+        "longitude": 20.053492
       },
       {
         "_links": {
@@ -361,7 +444,9 @@ axios.get('http://api.smog.info.pl/cities/'+cityId+'/stations')
         },
         "id": "dietla",
         "address": "ul. Dietla",
-        "city": "Kraków"
+        "city": "Kraków",
+        "latitude": 50.057447,
+        "longitude": 19.946008
       },
       {
         "_links": {
@@ -381,7 +466,9 @@ axios.get('http://api.smog.info.pl/cities/'+cityId+'/stations')
         },
         "id": "krasinskiego",
         "address": "al. Krasińskiego",
-        "city": "Kraków"
+        "city": "Kraków",
+        "latitude": 50.057678,
+        "longitude": 19.926189
       },
       {
         "_links": {
@@ -401,7 +488,9 @@ axios.get('http://api.smog.info.pl/cities/'+cityId+'/stations')
         },
         "id": "piastow",
         "address": "os. Piastów",
-        "city": "Kraków"
+        "city": "Kraków",
+        "latitude": 50.099361,
+        "longitude": 20.018317
       },
       {
         "_links": {
@@ -421,7 +510,9 @@ axios.get('http://api.smog.info.pl/cities/'+cityId+'/stations')
         },
         "id": "telimeny",
         "address": "ul. Telimeny 9",
-        "city": "Kraków"
+        "city": "Kraków",
+        "latitude": 50.0192,
+        "longitude": 20.016803
       }
     ]
   }
@@ -487,7 +578,9 @@ axios.get('http://api.smog.info.pl/cities/'+cityId+'/stations/'+stationId)
   },
   "id": "dietla",
   "address": "ul. Dietla",
-  "city": "Kraków"
+  "city": "Kraków",
+  "latitude": 50.057447,
+  "longitude": 19.946008
 }
 ```
 
