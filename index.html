@@ -130,11 +130,15 @@
 
 <p>SmogAPI prezentuje dane w formacie <code class="prettyprint">hal+json</code> ponieważ ułatwia on eksplorowanie API. Więcej informacji o formacie można znaleźć tu: <a href="https://en.wikipedia.org/wiki/Hypertext_Application_Language">Hypertext Application Language</a> lub w poniższej dokumentacji.</p>
 
-<h2 id="wersjonowanie">Wersjonowanie</h2>
+<h2 id="lista-zmian">Lista zmian</h2>
 
 <p>Aktualnie SmogAPI znajduje się w fazie beta. Oznacza to, że mogą jeszcze nastąpić zmiany zasugerowane przez beta testerów.</p>
 
 <p>Po fazie beta nie będą wprowadzane tzw. <em>breaking changes</em> czyli zmiany, które mogą uszkodzić istniejące integracje (usunięcie pola z obiektu, zmiana nazwy pola, etc). Natomiast mogą pojawić się nowe pola w istniejących obiektach lub nowe endpointy.</p>
+
+<ul>
+<li>2017-02-05: Wyszukiwanie okolicznych stacji, dodano współrzędne geograficzne do obiektu <code class="prettyprint">station</code>.</li>
+</ul>
 
 <h2 id="dobre-praktyki">Dobre praktyki</h2>
 
@@ -144,29 +148,23 @@
 <li>Jeśli korzystasz z tego API umieść informację o tym w swojej aplikacji lub na swojej stronie. Nie jest to wymagane ale to miłe. Bądź miły!</li>
 </ul>
 
-<h2 id="znane-problemy">Znane problemy</h2>
-
-<ul>
-<li>Ze względu na użytą technologię zapytania do SmogAPI nie mogą kończyć się znakiem ukośnika: <code class="prettyprint">/</code>. Np. endpoint <code class="prettyprint">/cities</code> zwróci listę miast natomiast <code class="prettyprint">/cities/</code> zwróci błąd.</li>
-</ul>
-
 <h2 id="skalowalno">Skalowalność</h2>
 
-<p>Aktualna architektura chmurowa (S3/CloudFront) SmogAPI pozwala na obsługę liczby zapytań zdecydowanie przekraczającej obecne zapotrzebowanie.</p>
+<p>Aktualna architektura chmurowa SmogAPI pozwala na obsługę liczby zapytań zdecydowanie przekraczającej obecne zapotrzebowanie.</p>
 
 <h2 id="dost-p-z-innych-domen">Dostęp z innych domen</h2>
 
 <p>Istnieje możliwość dostępu do SmogAPI z aplikacji webowych w innych domenach (<a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Access_control_CORS">CORS</a>). API zwraca odpowiednie nagłówki HTTP które to umożliwiają.</p>
 
-<h2 id="dost-p-przez-https">Dostęp przez HTTPS</h2>
+<h2 id="http-vs-https">HTTP vs HTTPS</h2>
 
-<p>Należy korzystać z protokołu HTTP ponieważ SmogAPI zawiera publicznie dostępne dane. Adres HTTP:</p>
+<p>Dostęp do endpointa <code class="prettyprint">/stations/nearby</code> powinien odbywać się przy użyciu bezpiecznego protokołu HTTPS ponieważ przesyłane są dane na temat lokalizacji użytkownika. Adres HTTPS:</p>
+
+<p><code class="prettyprint">https://api.smog.info.pl</code></p>
+
+<p>W pozostałych przypadkach można korzystać z protokołu HTTP ponieważ SmogAPI zawiera publicznie dostępne dane. Adres HTTP:</p>
 
 <p><code class="prettyprint">http://api.smog.info.pl</code></p>
-
-<p>W szczególnych przypadkach (np. gdy potrzebny jest dostęp do SmogAPI z aplikacji webowej serwowanej przez <code class="prettyprint">https</code>) proszę korzystać z tego adresu:</p>
-
-<p><code class="prettyprint">https://s3.eu-central-1.amazonaws.com/api.smog.info.pl</code></p>
 
 <h2 id="plany">Plany</h2>
 
@@ -381,7 +379,9 @@
   </span><span class="p">},</span><span class="w">
   </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"dietla"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ul. Dietla"</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"city"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Kraków"</span><span class="w">
+  </span><span class="nt">"city"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Kraków"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"latitude"</span><span class="p">:</span><span class="w"> </span><span class="mf">50.057447</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"longitude"</span><span class="p">:</span><span class="w"> </span><span class="mf">19.946008</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <p>Obiekt <code class="prettyprint">station</code> zawiera informacje o stacji pomiarowej. </p>
@@ -407,6 +407,14 @@
 <td>Nazwa miasta</td>
 </tr>
 <tr>
+<td><code class="prettyprint">latitude</code></td>
+<td>Szerokość geograficzna</td>
+</tr>
+<tr>
+<td><code class="prettyprint">longitude</code></td>
+<td>Długość geograficzna</td>
+</tr>
+<tr>
 <td><code class="prettyprint">_links.self</code></td>
 <td>Relatywny link do samego siebie</td>
 </tr>
@@ -421,6 +429,101 @@
 <tr>
 <td><code class="prettyprint">_links.measurements</code></td>
 <td>Relatywny link do pomiarów z danego dnia</td>
+</tr>
+</tbody></table>
+
+<h2 id="lista-okolicznych-stacji">Lista okolicznych stacji</h2>
+<pre class="highlight shell"><code>curl <span class="s2">"http://api.smog.info.pl/stations/nearby?longitude=19.2226&amp;latitude=49.6502"</span>
+</code></pre><pre class="highlight javascript"><code><span class="kd">var</span> <span class="nx">axios</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'axios'</span><span class="p">);</span>
+
+<span class="kd">var</span> <span class="nx">longitude</span> <span class="o">=</span> <span class="s1">'19.2226'</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">latitude</span> <span class="o">=</span> <span class="s1">'49.6502'</span><span class="p">;</span>
+
+<span class="nx">axios</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'http://api.smog.info.pl/stations/nearby?longitude='</span><span class="o">+</span><span class="nx">longitude</span><span class="o">+</span><span class="s1">'&amp;latitude='</span><span class="o">+</span><span class="nx">latitude</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">response</span><span class="p">.</span><span class="nx">data</span><span class="p">);</span>
+  <span class="p">});</span>
+</code></pre>
+<blockquote>
+<p>Przykładowa odpowiedź API:</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"_links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"self"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/stations/nearby?longitude=19.2226\u0026latitude=49.6502"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nt">"_embedded"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"records"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"_links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nt">"self"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cities/zywiec/stations/kopernika"</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nt">"city"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cities/zywiec"</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nt">"measurementsLatest"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cities/zywiec/stations/kopernika/measurements"</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nt">"measurements"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cities/zywiec/stations/kopernika/measurements/{date}"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"templated"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+          </span><span class="p">}</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"kopernika"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ul. Kopernika 83 a"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"city"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Żywiec"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"latitude"</span><span class="p">:</span><span class="w"> </span><span class="mf">49.671602</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"longitude"</span><span class="p">:</span><span class="w"> </span><span class="mf">19.234446</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>Zapytanie do tego endpointu zwróci listę stacji znajdujących się w promieniu 10km od punktu określonego przez parametry <code class="prettyprint">longitude</code> i <code class="prettyprint">latitude</code>. Lista będzie posortowana od najbliższych stacji i będzie zawierać maksymalnie 10 stacji.</p>
+
+<h3 id="zapytanie">Zapytanie</h3>
+
+<p><code class="prettyprint">GET http://api.smog.info.pl/stations/nearby?longitude={longitude}&amp;latitude={latitude}</code></p>
+
+<h3 id="parametry">Parametry</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Opis</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">{longitude}</code></td>
+<td>Długość geograficzna</td>
+</tr>
+<tr>
+<td><code class="prettyprint">{latitude}</code></td>
+<td>Szerokość geograficzna</td>
+</tr>
+</tbody></table>
+
+<h3 id="odpowied">Odpowiedź</h3>
+
+<table><thead>
+<tr>
+<th>Pole</th>
+<th>Opis</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">_links.self</code></td>
+<td>Relatywny link do samego siebie</td>
+</tr>
+<tr>
+<td><code class="prettyprint">_links.city</code></td>
+<td>Relatywny link do miasta</td>
+</tr>
+<tr>
+<td><code class="prettyprint">_embedded.records</code></td>
+<td>Lista obiektów <a href="#obiekt-station"><code class="prettyprint">station</code></a></td>
 </tr>
 </tbody></table>
 
@@ -467,7 +570,9 @@
         </span><span class="p">},</span><span class="w">
         </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bujaka"</span><span class="p">,</span><span class="w">
         </span><span class="nt">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ul. Bujaka"</span><span class="p">,</span><span class="w">
-        </span><span class="nt">"city"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Kraków"</span><span class="w">
+        </span><span class="nt">"city"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Kraków"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"latitude"</span><span class="p">:</span><span class="w"> </span><span class="mf">50.010575</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"longitude"</span><span class="p">:</span><span class="w"> </span><span class="mf">19.949189</span><span class="w">
       </span><span class="p">},</span><span class="w">
       </span><span class="p">{</span><span class="w">
         </span><span class="nt">"_links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
@@ -487,7 +592,9 @@
         </span><span class="p">},</span><span class="w">
         </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bulwarowa"</span><span class="p">,</span><span class="w">
         </span><span class="nt">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ul. Bulwarowa"</span><span class="p">,</span><span class="w">
-        </span><span class="nt">"city"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Kraków"</span><span class="w">
+        </span><span class="nt">"city"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Kraków"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"latitude"</span><span class="p">:</span><span class="w"> </span><span class="mf">50.069308</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"longitude"</span><span class="p">:</span><span class="w"> </span><span class="mf">20.053492</span><span class="w">
       </span><span class="p">},</span><span class="w">
       </span><span class="p">{</span><span class="w">
         </span><span class="nt">"_links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
@@ -507,7 +614,9 @@
         </span><span class="p">},</span><span class="w">
         </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"dietla"</span><span class="p">,</span><span class="w">
         </span><span class="nt">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ul. Dietla"</span><span class="p">,</span><span class="w">
-        </span><span class="nt">"city"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Kraków"</span><span class="w">
+        </span><span class="nt">"city"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Kraków"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"latitude"</span><span class="p">:</span><span class="w"> </span><span class="mf">50.057447</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"longitude"</span><span class="p">:</span><span class="w"> </span><span class="mf">19.946008</span><span class="w">
       </span><span class="p">},</span><span class="w">
       </span><span class="p">{</span><span class="w">
         </span><span class="nt">"_links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
@@ -527,7 +636,9 @@
         </span><span class="p">},</span><span class="w">
         </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"krasinskiego"</span><span class="p">,</span><span class="w">
         </span><span class="nt">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"al. Krasińskiego"</span><span class="p">,</span><span class="w">
-        </span><span class="nt">"city"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Kraków"</span><span class="w">
+        </span><span class="nt">"city"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Kraków"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"latitude"</span><span class="p">:</span><span class="w"> </span><span class="mf">50.057678</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"longitude"</span><span class="p">:</span><span class="w"> </span><span class="mf">19.926189</span><span class="w">
       </span><span class="p">},</span><span class="w">
       </span><span class="p">{</span><span class="w">
         </span><span class="nt">"_links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
@@ -547,7 +658,9 @@
         </span><span class="p">},</span><span class="w">
         </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"piastow"</span><span class="p">,</span><span class="w">
         </span><span class="nt">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"os. Piastów"</span><span class="p">,</span><span class="w">
-        </span><span class="nt">"city"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Kraków"</span><span class="w">
+        </span><span class="nt">"city"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Kraków"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"latitude"</span><span class="p">:</span><span class="w"> </span><span class="mf">50.099361</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"longitude"</span><span class="p">:</span><span class="w"> </span><span class="mf">20.018317</span><span class="w">
       </span><span class="p">},</span><span class="w">
       </span><span class="p">{</span><span class="w">
         </span><span class="nt">"_links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
@@ -567,7 +680,9 @@
         </span><span class="p">},</span><span class="w">
         </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"telimeny"</span><span class="p">,</span><span class="w">
         </span><span class="nt">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ul. Telimeny 9"</span><span class="p">,</span><span class="w">
-        </span><span class="nt">"city"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Kraków"</span><span class="w">
+        </span><span class="nt">"city"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Kraków"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"latitude"</span><span class="p">:</span><span class="w"> </span><span class="mf">50.0192</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"longitude"</span><span class="p">:</span><span class="w"> </span><span class="mf">20.016803</span><span class="w">
       </span><span class="p">}</span><span class="w">
     </span><span class="p">]</span><span class="w">
   </span><span class="p">}</span><span class="w">
@@ -648,7 +763,9 @@
   </span><span class="p">},</span><span class="w">
   </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"dietla"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ul. Dietla"</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"city"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Kraków"</span><span class="w">
+  </span><span class="nt">"city"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Kraków"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"latitude"</span><span class="p">:</span><span class="w"> </span><span class="mf">50.057447</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"longitude"</span><span class="p">:</span><span class="w"> </span><span class="mf">19.946008</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <p>Zapytanie do tego endpointu zwróci informację o konkretnej stacji pomiarowej (obiekt <a href="#obiekt-station"><code class="prettyprint">station</code></a>).</p>
@@ -1147,5 +1264,15 @@ Zauważ, że pierwszy na liście pomiarów (&ldquo;Przykładowa odpowiedź API&r
           </div>
       </div>
     </div>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-91507801-1', 'auto');
+      ga('send', 'pageview');
+
+    </script>
   </body>
 </html>
