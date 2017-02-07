@@ -178,186 +178,6 @@
 
 <p>Bartek Nowotarski <small><a href="https://twitter.com/bartn_">Twitter</a> <a href="https://pl.linkedin.com/in/bartlomiejnowotarski">LinkedIn</a></small></p>
 
-<h1 id="miasta">Miasta</h1>
-
-<h2 id="obiekt-city">Obiekt <code class="prettyprint">city</code></h2>
-<pre class="highlight json"><code><span class="p">{</span><span class="w">
-  </span><span class="nt">"_links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="nt">"self"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cities/krakow"</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-    </span><span class="nt">"stations"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cities/krakow/stations"</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-  </span><span class="p">},</span><span class="w">
-  </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"krakow"</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Kraków"</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre>
-<p>Obiekt <code class="prettyprint">city</code> zawiera informacje o pojedynczym mieście. </p>
-
-<h3 id="opis-p-l">Opis pól</h3>
-
-<table><thead>
-<tr>
-<th>Pole</th>
-<th>Opis</th>
-</tr>
-</thead><tbody>
-<tr>
-<td><code class="prettyprint">id</code></td>
-<td>ID miasta</td>
-</tr>
-<tr>
-<td><code class="prettyprint">name</code></td>
-<td>Nazwa miasta</td>
-</tr>
-<tr>
-<td><code class="prettyprint">_links.self</code></td>
-<td>Relatywny link do samego siebie</td>
-</tr>
-<tr>
-<td><code class="prettyprint">_links.stations</code></td>
-<td>Relatywny link do listy stacji pomiarowych w danym mieście</td>
-</tr>
-</tbody></table>
-
-<h2 id="lista-miast">Lista miast</h2>
-<pre class="highlight shell"><code>curl <span class="s2">"http://api.smog.info.pl/cities"</span>
-</code></pre><pre class="highlight javascript"><code><span class="kd">var</span> <span class="nx">axios</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'axios'</span><span class="p">);</span>
-
-<span class="nx">axios</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'http://api.smog.info.pl/cities'</span><span class="p">)</span>
-  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">response</span><span class="p">.</span><span class="nx">data</span><span class="p">);</span>
-  <span class="p">});</span>
-</code></pre>
-<blockquote>
-<p>Przykładowa odpowiedź API:</p>
-</blockquote>
-<pre class="highlight json"><code><span class="p">{</span><span class="w">
-  </span><span class="nt">"_links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="nt">"self"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cities"</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-  </span><span class="p">},</span><span class="w">
-  </span><span class="nt">"_embedded"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="nt">"records"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-      </span><span class="p">{</span><span class="w">
-        </span><span class="nt">"_links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-          </span><span class="nt">"self"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-            </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cities/augustow"</span><span class="w">
-          </span><span class="p">},</span><span class="w">
-          </span><span class="nt">"stations"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-            </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cities/augustow/stations"</span><span class="w">
-          </span><span class="p">}</span><span class="w">
-        </span><span class="p">},</span><span class="w">
-        </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"augustow"</span><span class="p">,</span><span class="w">
-        </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Augustów"</span><span class="w">
-      </span><span class="p">},</span><span class="w">
-      </span><span class="p">{</span><span class="w">
-        </span><span class="nt">"_links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-          </span><span class="nt">"self"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-            </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cities/belsk-duzy"</span><span class="w">
-          </span><span class="p">},</span><span class="w">
-          </span><span class="nt">"stations"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-            </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cities/belsk-duzy/stations"</span><span class="w">
-          </span><span class="p">}</span><span class="w">
-        </span><span class="p">},</span><span class="w">
-        </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"belsk-duzy"</span><span class="p">,</span><span class="w">
-        </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Belsk Duży"</span><span class="w">
-      </span><span class="p">},</span><span class="w">
-      </span><span class="p">{</span><span class="w">
-        </span><span class="nt">"_links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-          </span><span class="nt">"self"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-            </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cities/biala-podlaska"</span><span class="w">
-          </span><span class="p">},</span><span class="w">
-          </span><span class="nt">"stations"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-            </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cities/biala-podlaska/stations"</span><span class="w">
-          </span><span class="p">}</span><span class="w">
-        </span><span class="p">},</span><span class="w">
-        </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"biala-podlaska"</span><span class="p">,</span><span class="w">
-        </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Biała Podlaska"</span><span class="w">
-      </span><span class="p">},</span><span class="w">
-      </span><span class="err">//</span><span class="w"> </span><span class="err">....</span><span class="w">
-    </span><span class="p">]</span><span class="w">
-  </span><span class="p">}</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre>
-<p>Zapytanie do tego endpointu zwróci listę miast dostępnych przez SmogAPI.</p>
-
-<h3 id="zapytanie">Zapytanie</h3>
-
-<p><code class="prettyprint">GET http://api.smog.info.pl/cities</code></p>
-
-<h3 id="odpowied">Odpowiedź</h3>
-
-<table><thead>
-<tr>
-<th>Pole</th>
-<th>Opis</th>
-</tr>
-</thead><tbody>
-<tr>
-<td><code class="prettyprint">_links.self</code></td>
-<td>Relatywny link do samego siebie</td>
-</tr>
-<tr>
-<td><code class="prettyprint">_embedded.records</code></td>
-<td>Lista obiektów <a href="#obiekt-city"><code class="prettyprint">city</code></a></td>
-</tr>
-</tbody></table>
-
-<h2 id="pojedyncze-miasto">Pojedyncze miasto</h2>
-<pre class="highlight shell"><code>curl <span class="s2">"http://api.smog.info.pl/cities/krakow"</span>
-</code></pre><pre class="highlight javascript"><code><span class="kd">var</span> <span class="nx">axios</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'axios'</span><span class="p">);</span>
-
-<span class="kd">var</span> <span class="nx">cityId</span> <span class="o">=</span> <span class="s1">'krakow'</span><span class="p">;</span>
-
-<span class="nx">axios</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'http://api.smog.info.pl/cities/'</span><span class="o">+</span><span class="nx">cityId</span><span class="p">)</span>
-  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">response</span><span class="p">.</span><span class="nx">data</span><span class="p">);</span>
-  <span class="p">});</span>
-</code></pre>
-<blockquote>
-<p>Przykładowa odpowiedź API:</p>
-</blockquote>
-<pre class="highlight json"><code><span class="p">{</span><span class="w">
-  </span><span class="nt">"_links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="nt">"self"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cities/krakow"</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-    </span><span class="nt">"stations"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cities/krakow/stations"</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-  </span><span class="p">},</span><span class="w">
-  </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"krakow"</span><span class="p">,</span><span class="w">
-  </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Kraków"</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre>
-<p>Zapytanie do tego endpointu zwróci informację o konkretnym mieście (obiekt <a href="#obiekt-city"><code class="prettyprint">city</code></a>).</p>
-
-<h3 id="zapytanie">Zapytanie</h3>
-
-<p><code class="prettyprint">GET http://api.smog.info.pl/cities/{city}</code></p>
-
-<h3 id="parametry-url">Parametry URL</h3>
-
-<table><thead>
-<tr>
-<th>Parameter</th>
-<th>Opis</th>
-</tr>
-</thead><tbody>
-<tr>
-<td><code class="prettyprint">{city}</code></td>
-<td>ID miasta</td>
-</tr>
-</tbody></table>
-
-<h3 id="odpowied">Odpowiedź</h3>
-
-<p>Zobacz: obiekt <a href="#obiekt-city"><code class="prettyprint">city</code></a>.</p>
-
 <h1 id="stacje-pomiarowe">Stacje pomiarowe</h1>
 
 <h2 id="obiekt-station">Obiekt <code class="prettyprint">station</code></h2>
@@ -433,13 +253,13 @@
 </tbody></table>
 
 <h2 id="lista-okolicznych-stacji">Lista okolicznych stacji</h2>
-<pre class="highlight shell"><code>curl <span class="s2">"http://api.smog.info.pl/stations/nearby?longitude=19.2226&amp;latitude=49.6502"</span>
+<pre class="highlight shell"><code>curl <span class="s2">"https://api.smog.info.pl/stations/nearby?latitude=49.6502&amp;longitude=19.2226"</span>
 </code></pre><pre class="highlight javascript"><code><span class="kd">var</span> <span class="nx">axios</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'axios'</span><span class="p">);</span>
 
-<span class="kd">var</span> <span class="nx">longitude</span> <span class="o">=</span> <span class="s1">'19.2226'</span><span class="p">;</span>
 <span class="kd">var</span> <span class="nx">latitude</span> <span class="o">=</span> <span class="s1">'49.6502'</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">longitude</span> <span class="o">=</span> <span class="s1">'19.2226'</span><span class="p">;</span>
 
-<span class="nx">axios</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'http://api.smog.info.pl/stations/nearby?longitude='</span><span class="o">+</span><span class="nx">longitude</span><span class="o">+</span><span class="s1">'&amp;latitude='</span><span class="o">+</span><span class="nx">latitude</span><span class="p">)</span>
+<span class="nx">axios</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'https://api.smog.info.pl/stations/nearby?latitude='</span><span class="o">+</span><span class="nx">latitude</span><span class="o">+</span><span class="s1">'longitude='</span><span class="o">+</span><span class="nx">longitude</span><span class="p">)</span>
   <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
     <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">response</span><span class="p">.</span><span class="nx">data</span><span class="p">);</span>
   <span class="p">});</span>
@@ -450,7 +270,7 @@
 <pre class="highlight json"><code><span class="p">{</span><span class="w">
   </span><span class="nt">"_links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="nt">"self"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/stations/nearby?longitude=19.2226\u0026latitude=49.6502"</span><span class="w">
+      </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/stations/nearby?latitude=49.6502\u0026longitude=19.2226"</span><span class="w">
     </span><span class="p">}</span><span class="w">
   </span><span class="p">},</span><span class="w">
   </span><span class="nt">"_embedded"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
@@ -481,11 +301,11 @@
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
-<p>Zapytanie do tego endpointu zwróci listę stacji znajdujących się w promieniu 10km od punktu określonego przez parametry <code class="prettyprint">longitude</code> i <code class="prettyprint">latitude</code>. Lista będzie posortowana od najbliższych stacji i będzie zawierać maksymalnie 10 stacji.</p>
+<p>Zapytanie do tego endpointu zwróci listę stacji znajdujących się w promieniu 10km od punktu określonego przez parametry <code class="prettyprint">latitude</code> i <code class="prettyprint">longitude</code>. Lista będzie posortowana od najbliższych stacji i będzie zawierać maksymalnie 10 stacji.</p>
 
 <h3 id="zapytanie">Zapytanie</h3>
 
-<p><code class="prettyprint">GET http://api.smog.info.pl/stations/nearby?longitude={longitude}&amp;latitude={latitude}</code></p>
+<p><code class="prettyprint">GET https://api.smog.info.pl/stations/nearby?latitude={latitude}&amp;longitude={longitude}</code></p>
 
 <h3 id="parametry">Parametry</h3>
 
@@ -496,12 +316,12 @@
 </tr>
 </thead><tbody>
 <tr>
-<td><code class="prettyprint">{longitude}</code></td>
-<td>Długość geograficzna</td>
+<td><code class="prettyprint">{latitude}</code></td>
+<td>Szerokość geograficzna (dla Polski pomiędzy 49 a 55)</td>
 </tr>
 <tr>
-<td><code class="prettyprint">{latitude}</code></td>
-<td>Szerokość geograficzna</td>
+<td><code class="prettyprint">{longitude}</code></td>
+<td>Długość geograficzna (dla Polski pomiędzy 14 a 25)</td>
 </tr>
 </tbody></table>
 
@@ -1249,6 +1069,186 @@ Zauważ, że pierwszy na liście pomiarów (&ldquo;Przykładowa odpowiedź API&r
 <td>Lista obiektów <a href="#obiekt-measurement"><code class="prettyprint">measurement</code></a></td>
 </tr>
 </tbody></table>
+
+<h1 id="miasta">Miasta</h1>
+
+<h2 id="obiekt-city">Obiekt <code class="prettyprint">city</code></h2>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"_links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"self"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cities/krakow"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"stations"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cities/krakow/stations"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"krakow"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Kraków"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>Obiekt <code class="prettyprint">city</code> zawiera informacje o pojedynczym mieście.</p>
+
+<h3 id="opis-p-l">Opis pól</h3>
+
+<table><thead>
+<tr>
+<th>Pole</th>
+<th>Opis</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">id</code></td>
+<td>ID miasta</td>
+</tr>
+<tr>
+<td><code class="prettyprint">name</code></td>
+<td>Nazwa miasta</td>
+</tr>
+<tr>
+<td><code class="prettyprint">_links.self</code></td>
+<td>Relatywny link do samego siebie</td>
+</tr>
+<tr>
+<td><code class="prettyprint">_links.stations</code></td>
+<td>Relatywny link do listy stacji pomiarowych w danym mieście</td>
+</tr>
+</tbody></table>
+
+<h2 id="lista-miast">Lista miast</h2>
+<pre class="highlight shell"><code>curl <span class="s2">"http://api.smog.info.pl/cities"</span>
+</code></pre><pre class="highlight javascript"><code><span class="kd">var</span> <span class="nx">axios</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'axios'</span><span class="p">);</span>
+
+<span class="nx">axios</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'http://api.smog.info.pl/cities'</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">response</span><span class="p">.</span><span class="nx">data</span><span class="p">);</span>
+  <span class="p">});</span>
+</code></pre>
+<blockquote>
+<p>Przykładowa odpowiedź API:</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"_links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"self"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cities"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nt">"_embedded"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"records"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"_links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nt">"self"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cities/augustow"</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nt">"stations"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cities/augustow/stations"</span><span class="w">
+          </span><span class="p">}</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"augustow"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Augustów"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"_links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nt">"self"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cities/belsk-duzy"</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nt">"stations"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cities/belsk-duzy/stations"</span><span class="w">
+          </span><span class="p">}</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"belsk-duzy"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Belsk Duży"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"_links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nt">"self"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cities/biala-podlaska"</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nt">"stations"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cities/biala-podlaska/stations"</span><span class="w">
+          </span><span class="p">}</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"biala-podlaska"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Biała Podlaska"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="err">//</span><span class="w"> </span><span class="err">....</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>Zapytanie do tego endpointu zwróci listę miast dostępnych przez SmogAPI.</p>
+
+<h3 id="zapytanie">Zapytanie</h3>
+
+<p><code class="prettyprint">GET http://api.smog.info.pl/cities</code></p>
+
+<h3 id="odpowied">Odpowiedź</h3>
+
+<table><thead>
+<tr>
+<th>Pole</th>
+<th>Opis</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">_links.self</code></td>
+<td>Relatywny link do samego siebie</td>
+</tr>
+<tr>
+<td><code class="prettyprint">_embedded.records</code></td>
+<td>Lista obiektów <a href="#obiekt-city"><code class="prettyprint">city</code></a></td>
+</tr>
+</tbody></table>
+
+<h2 id="pojedyncze-miasto">Pojedyncze miasto</h2>
+<pre class="highlight shell"><code>curl <span class="s2">"http://api.smog.info.pl/cities/krakow"</span>
+</code></pre><pre class="highlight javascript"><code><span class="kd">var</span> <span class="nx">axios</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'axios'</span><span class="p">);</span>
+
+<span class="kd">var</span> <span class="nx">cityId</span> <span class="o">=</span> <span class="s1">'krakow'</span><span class="p">;</span>
+
+<span class="nx">axios</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'http://api.smog.info.pl/cities/'</span><span class="o">+</span><span class="nx">cityId</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">response</span><span class="p">.</span><span class="nx">data</span><span class="p">);</span>
+  <span class="p">});</span>
+</code></pre>
+<blockquote>
+<p>Przykładowa odpowiedź API:</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"_links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"self"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cities/krakow"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"stations"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cities/krakow/stations"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"krakow"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Kraków"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>Zapytanie do tego endpointu zwróci informację o konkretnym mieście (obiekt <a href="#obiekt-city"><code class="prettyprint">city</code></a>).</p>
+
+<h3 id="zapytanie">Zapytanie</h3>
+
+<p><code class="prettyprint">GET http://api.smog.info.pl/cities/{city}</code></p>
+
+<h3 id="parametry-url">Parametry URL</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Opis</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code class="prettyprint">{city}</code></td>
+<td>ID miasta</td>
+</tr>
+</tbody></table>
+
+<h3 id="odpowied">Odpowiedź</h3>
+
+<p>Zobacz: obiekt <a href="#obiekt-city"><code class="prettyprint">city</code></a>.</p>
 
           <h1 id="zg-aszanie-b-d-w">Zgłaszanie błędów</h1>
 
