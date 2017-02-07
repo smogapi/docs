@@ -68,167 +68,6 @@ W pozostałych przypadkach można korzystać z protokołu HTTP ponieważ SmogAPI
 
 Bartek Nowotarski <small>[Twitter](https://twitter.com/bartn_) [LinkedIn](https://pl.linkedin.com/in/bartlomiejnowotarski)</small>
 
-# Miasta
-
-## Obiekt `city`
-
-```json
-{
-  "_links": {
-    "self": {
-      "href": "/cities/krakow"
-    },
-    "stations": {
-      "href": "/cities/krakow/stations"
-    }
-  },
-  "id": "krakow",
-  "name": "Kraków"
-}
-```
-
-Obiekt `city` zawiera informacje o pojedynczym mieście. 
-
-### Opis pól
-
-Pole | Opis
---------- | -------
-`id` | ID miasta
-`name` | Nazwa miasta
-`_links.self` | Relatywny link do samego siebie
-`_links.stations` | Relatywny link do listy stacji pomiarowych w danym mieście
-
-## Lista miast
-
-```shell
-curl "http://api.smog.info.pl/cities"
-```
-
-```javascript
-var axios = require('axios');
-
-axios.get('http://api.smog.info.pl/cities')
-  .then(function(response) {
-    console.log(response.data);
-  });
-```
-
-> Przykładowa odpowiedź API:
-
-```json
-{
-  "_links": {
-    "self": {
-      "href": "/cities"
-    }
-  },
-  "_embedded": {
-    "records": [
-      {
-        "_links": {
-          "self": {
-            "href": "/cities/augustow"
-          },
-          "stations": {
-            "href": "/cities/augustow/stations"
-          }
-        },
-        "id": "augustow",
-        "name": "Augustów"
-      },
-      {
-        "_links": {
-          "self": {
-            "href": "/cities/belsk-duzy"
-          },
-          "stations": {
-            "href": "/cities/belsk-duzy/stations"
-          }
-        },
-        "id": "belsk-duzy",
-        "name": "Belsk Duży"
-      },
-      {
-        "_links": {
-          "self": {
-            "href": "/cities/biala-podlaska"
-          },
-          "stations": {
-            "href": "/cities/biala-podlaska/stations"
-          }
-        },
-        "id": "biala-podlaska",
-        "name": "Biała Podlaska"
-      },
-      // ....
-    ]
-  }
-}
-```
-
-Zapytanie do tego endpointu zwróci listę miast dostępnych przez SmogAPI.
-
-### Zapytanie
-
-`GET http://api.smog.info.pl/cities`
-
-### Odpowiedź
-
-Pole | Opis
---------- | -------
-`_links.self` | Relatywny link do samego siebie
-`_embedded.records` | Lista obiektów [`city`](#obiekt-city)
-
-## Pojedyncze miasto
-
-```shell
-curl "http://api.smog.info.pl/cities/krakow"
-```
-
-```javascript
-var axios = require('axios');
-
-var cityId = 'krakow';
-
-axios.get('http://api.smog.info.pl/cities/'+cityId)
-  .then(function(response) {
-    console.log(response.data);
-  });
-```
-
-> Przykładowa odpowiedź API:
-
-```json
-{
-  "_links": {
-    "self": {
-      "href": "/cities/krakow"
-    },
-    "stations": {
-      "href": "/cities/krakow/stations"
-    }
-  },
-  "id": "krakow",
-  "name": "Kraków"
-}
-```
-
-Zapytanie do tego endpointu zwróci informację o konkretnym mieście (obiekt [`city`](#obiekt-city)).
-
-### Zapytanie
-
-`GET http://api.smog.info.pl/cities/{city}`
-
-### Parametry URL
-
-Parameter | Opis
---------- | -------
-`{city}` | ID miasta
-
-### Odpowiedź
-
-Zobacz: obiekt [`city`](#obiekt-city).
-
 # Stacje pomiarowe
 
 ## Obiekt `station`
@@ -277,16 +116,16 @@ Pole | Opis
 ## Lista okolicznych stacji
 
 ```shell
-curl "http://api.smog.info.pl/stations/nearby?longitude=19.2226&latitude=49.6502"
+curl "https://api.smog.info.pl/stations/nearby?latitude=49.6502&longitude=19.2226"
 ```
 
 ```javascript
 var axios = require('axios');
 
-var longitude = '19.2226';
 var latitude = '49.6502';
+var longitude = '19.2226';
 
-axios.get('http://api.smog.info.pl/stations/nearby?longitude='+longitude+'&latitude='+latitude)
+axios.get('https://api.smog.info.pl/stations/nearby?latitude='+latitude+'longitude='+longitude)
   .then(function(response) {
     console.log(response.data);
   });
@@ -298,7 +137,7 @@ axios.get('http://api.smog.info.pl/stations/nearby?longitude='+longitude+'&latit
 {
   "_links": {
     "self": {
-      "href": "/stations/nearby?longitude=19.2226\u0026latitude=49.6502"
+      "href": "/stations/nearby?latitude=49.6502\u0026longitude=19.2226"
     }
   },
   "_embedded": {
@@ -330,18 +169,18 @@ axios.get('http://api.smog.info.pl/stations/nearby?longitude='+longitude+'&latit
 }
 ```
 
-Zapytanie do tego endpointu zwróci listę stacji znajdujących się w promieniu 10km od punktu określonego przez parametry `longitude` i `latitude`. Lista będzie posortowana od najbliższych stacji i będzie zawierać maksymalnie 10 stacji.
+Zapytanie do tego endpointu zwróci listę stacji znajdujących się w promieniu 10km od punktu określonego przez parametry `latitude` i `longitude`. Lista będzie posortowana od najbliższych stacji i będzie zawierać maksymalnie 10 stacji.
 
 ### Zapytanie
 
-`GET http://api.smog.info.pl/stations/nearby?longitude={longitude}&latitude={latitude}`
+`GET https://api.smog.info.pl/stations/nearby?latitude={latitude}&longitude={longitude}`
 
 ### Parametry
 
 Parameter | Opis
 --------- | -------
-`{longitude}` | Długość geograficzna
-`{latitude}` | Szerokość geograficzna
+`{latitude}` | Szerokość geograficzna (dla Polski pomiędzy 49 a 55)
+`{longitude}` | Długość geograficzna (dla Polski pomiędzy 14 a 25)
 
 ### Odpowiedź
 
@@ -960,3 +799,163 @@ Pole | Opis
 `_links.station` | Relatywny link do stacji
 `_embedded.records` | Lista obiektów [`measurement`](#obiekt-measurement)
 
+# Miasta
+
+## Obiekt `city`
+
+```json
+{
+  "_links": {
+    "self": {
+      "href": "/cities/krakow"
+    },
+    "stations": {
+      "href": "/cities/krakow/stations"
+    }
+  },
+  "id": "krakow",
+  "name": "Kraków"
+}
+```
+
+Obiekt `city` zawiera informacje o pojedynczym mieście.
+
+### Opis pól
+
+Pole | Opis
+--------- | -------
+`id` | ID miasta
+`name` | Nazwa miasta
+`_links.self` | Relatywny link do samego siebie
+`_links.stations` | Relatywny link do listy stacji pomiarowych w danym mieście
+
+## Lista miast
+
+```shell
+curl "http://api.smog.info.pl/cities"
+```
+
+```javascript
+var axios = require('axios');
+
+axios.get('http://api.smog.info.pl/cities')
+  .then(function(response) {
+    console.log(response.data);
+  });
+```
+
+> Przykładowa odpowiedź API:
+
+```json
+{
+  "_links": {
+    "self": {
+      "href": "/cities"
+    }
+  },
+  "_embedded": {
+    "records": [
+      {
+        "_links": {
+          "self": {
+            "href": "/cities/augustow"
+          },
+          "stations": {
+            "href": "/cities/augustow/stations"
+          }
+        },
+        "id": "augustow",
+        "name": "Augustów"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "/cities/belsk-duzy"
+          },
+          "stations": {
+            "href": "/cities/belsk-duzy/stations"
+          }
+        },
+        "id": "belsk-duzy",
+        "name": "Belsk Duży"
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "/cities/biala-podlaska"
+          },
+          "stations": {
+            "href": "/cities/biala-podlaska/stations"
+          }
+        },
+        "id": "biala-podlaska",
+        "name": "Biała Podlaska"
+      },
+      // ....
+    ]
+  }
+}
+```
+
+Zapytanie do tego endpointu zwróci listę miast dostępnych przez SmogAPI.
+
+### Zapytanie
+
+`GET http://api.smog.info.pl/cities`
+
+### Odpowiedź
+
+Pole | Opis
+--------- | -------
+`_links.self` | Relatywny link do samego siebie
+`_embedded.records` | Lista obiektów [`city`](#obiekt-city)
+
+## Pojedyncze miasto
+
+```shell
+curl "http://api.smog.info.pl/cities/krakow"
+```
+
+```javascript
+var axios = require('axios');
+
+var cityId = 'krakow';
+
+axios.get('http://api.smog.info.pl/cities/'+cityId)
+  .then(function(response) {
+    console.log(response.data);
+  });
+```
+
+> Przykładowa odpowiedź API:
+
+```json
+{
+  "_links": {
+    "self": {
+      "href": "/cities/krakow"
+    },
+    "stations": {
+      "href": "/cities/krakow/stations"
+    }
+  },
+  "id": "krakow",
+  "name": "Kraków"
+}
+```
+
+Zapytanie do tego endpointu zwróci informację o konkretnym mieście (obiekt [`city`](#obiekt-city)).
+
+### Zapytanie
+
+`GET http://api.smog.info.pl/cities/{city}`
+
+### Parametry URL
+
+Parameter | Opis
+--------- | -------
+`{city}` | ID miasta
+
+### Odpowiedź
+
+Zobacz: obiekt [`city`](#obiekt-city).
