@@ -8,9 +8,6 @@ language_tabs:
 toc_footers:
   - <a href='https://github.com/tripit/slate'>Powered by Slate</a>
 
-includes:
-  - report
-
 search: true
 ---
 
@@ -18,7 +15,7 @@ search: true
 
 > http://api.smog.info.pl
 
-SmogAPI to REST API zawierające listę pomiarów powietrza z całej Polski, które powstało aby ułatwić developerom (i innym zainteresowanym) dostęp do danych o jakości w powietrza w Polsce. SmogAPI agreguje dane z dostępnych źródeł i prezentuje je w formie prostego i [skalowalnego](#skalowalno) API nawet wtedy kiedy źródła danych są obciążone lub niedostępne.
+SmogAPI to REST API zawierające listę pomiarów powietrza, które powstało aby ułatwić developerom (i innym zainteresowanym) dostęp do danych o jakości powietrza w Polsce. SmogAPI agreguje dane z dostępnych źródeł i prezentuje je w formie prostego i [skalowalnego](#skalowalno) API nawet wtedy kiedy źródła danych są obciążone lub niedostępne.
 
 # O API
 
@@ -33,11 +30,12 @@ Aktualnie SmogAPI znajduje się w fazie beta. Oznacza to, że mogą jeszcze nast
 Po fazie beta nie będą wprowadzane tzw. _breaking changes_ czyli zmiany, które mogą uszkodzić istniejące integracje (usunięcie pola z obiektu, zmiana nazwy pola, etc). Natomiast mogą pojawić się nowe pola w istniejących obiektach lub nowe endpointy.
 
 * 2017-02-05: Wyszukiwanie okolicznych stacji, dodano współrzędne geograficzne do obiektu `station`.
+* 2017-02-12: Poprawione zduplikowane nagłówki. Dzięki bujal!
 
 ## Dobre praktyki
 
 * Mimo że SmogAPI udostępniane jest bez opłat i bez limitu zapytań zalecane jest o cacheowanie danych na własnym serwerze lub urządzeniu użytkownika. Wskazania starsze niż kilka godzin prawdopodobnie już się nie zmienią.
-* Jeśli nie korzystasz z API przez przeglądarkę dołącz do swojego zapytania nagłówek HTTP: [`Referer`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referer). Jako URL podaj link do twojej appki w Google Play albo App Store. Dane posłużą do celów statystycznych.
+* Jeśli nie korzystasz z API przez przeglądarkę dołącz do swojego zapytania nagłówek HTTP: [`Referer`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referer) (podaj link do twojej appki w Google Play albo App Store) lub [`User-Agent`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent). Dane posłużą do celów statystycznych.
 * Jeśli korzystasz z tego API umieść informację o tym w swojej aplikacji lub na swojej stronie. Nie jest to wymagane ale to miłe. Bądź miły!
 
 ## Skalowalność
@@ -63,6 +61,12 @@ W pozostałych przypadkach można korzystać z protokołu HTTP ponieważ SmogAPI
 * Więcej źródeł danych.
 * Dostęp do prognoz przez API.
 * Umożliwienie udostępniania wyników posiadaczom przydomowych urządzeń pomiarowych.
+
+## Zgłaszanie błędów
+
+Błędy związane z API: [https://github.com/smogapi/api/issues](https://github.com/smogapi/api/issues)
+
+Błędy związane z dokumentacją: [https://github.com/smogapi/docs/issues](https://github.com/smogapi/docs/issues)
 
 ## Autor
 
@@ -169,7 +173,7 @@ axios.get('https://api.smog.info.pl/stations/nearby?latitude='+latitude+'longitu
 }
 ```
 
-Zapytanie do tego endpointu zwróci listę stacji znajdujących się w promieniu 10km od punktu określonego przez parametry `latitude` i `longitude`. Lista będzie posortowana od najbliższych stacji i będzie zawierać maksymalnie 10 stacji.
+Zapytanie do tego endpointu zwróci listę stacji znajdujących się w promieniu 10km od punktu określonego przez parametry `latitude` i `longitude`. Lista będzie posortowana od najbliższych stacji i będzie zawierać maksymalnie 10 stacji. W przypadku braku stacji API zwróci pustą listę (`[]`).
 
 ### Zapytanie
 
@@ -188,7 +192,7 @@ Pole | Opis
 --------- | -------
 `_links.self` | Relatywny link do samego siebie
 `_links.city` | Relatywny link do miasta
-`_embedded.records` | Lista obiektów [`station`](#obiekt-station)
+`_embedded.records` | Lista obiektów [`station`](#obiekt-station). W przypadku braku stacji będzie pusta.
 
 ## Lista stacji w danym mieście
 
