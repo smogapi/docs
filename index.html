@@ -122,7 +122,7 @@
 <p>http://api.smog.info.pl</p>
 </blockquote>
 
-<p>SmogAPI to REST API zawierające listę pomiarów powietrza z całej Polski, które powstało aby ułatwić developerom (i innym zainteresowanym) dostęp do danych o jakości w powietrza w Polsce. SmogAPI agreguje dane z dostępnych źródeł i prezentuje je w formie prostego i <a href="#skalowalno">skalowalnego</a> API nawet wtedy kiedy źródła danych są obciążone lub niedostępne.</p>
+<p>SmogAPI to REST API zawierające listę pomiarów powietrza, które powstało aby ułatwić developerom (i innym zainteresowanym) dostęp do danych o jakości powietrza w Polsce. SmogAPI agreguje dane z dostępnych źródeł i prezentuje je w formie prostego i <a href="#skalowalno">skalowalnego</a> API nawet wtedy kiedy źródła danych są obciążone lub niedostępne.</p>
 
 <h1 id="o-api">O API</h1>
 
@@ -138,13 +138,14 @@
 
 <ul>
 <li>2017-02-05: Wyszukiwanie okolicznych stacji, dodano współrzędne geograficzne do obiektu <code class="prettyprint">station</code>.</li>
+<li>2017-02-12: Poprawione zduplikowane nagłówki. Dzięki bujal!</li>
 </ul>
 
 <h2 id="dobre-praktyki">Dobre praktyki</h2>
 
 <ul>
 <li>Mimo że SmogAPI udostępniane jest bez opłat i bez limitu zapytań zalecane jest o cacheowanie danych na własnym serwerze lub urządzeniu użytkownika. Wskazania starsze niż kilka godzin prawdopodobnie już się nie zmienią.</li>
-<li>Jeśli nie korzystasz z API przez przeglądarkę dołącz do swojego zapytania nagłówek HTTP: <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referer"><code class="prettyprint">Referer</code></a>. Jako URL podaj link do twojej appki w Google Play albo App Store. Dane posłużą do celów statystycznych.</li>
+<li>Jeśli nie korzystasz z API przez przeglądarkę dołącz do swojego zapytania nagłówek HTTP: <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referer"><code class="prettyprint">Referer</code></a> (podaj link do twojej appki w Google Play albo App Store) lub <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent"><code class="prettyprint">User-Agent</code></a>. Dane posłużą do celów statystycznych.</li>
 <li>Jeśli korzystasz z tego API umieść informację o tym w swojej aplikacji lub na swojej stronie. Nie jest to wymagane ale to miłe. Bądź miły!</li>
 </ul>
 
@@ -173,6 +174,12 @@
 <li>Dostęp do prognoz przez API.</li>
 <li>Umożliwienie udostępniania wyników posiadaczom przydomowych urządzeń pomiarowych.</li>
 </ul>
+
+<h2 id="zg-aszanie-b-d-w">Zgłaszanie błędów</h2>
+
+<p>Błędy związane z API: <a href="https://github.com/smogapi/api/issues">https://github.com/smogapi/api/issues</a></p>
+
+<p>Błędy związane z dokumentacją: <a href="https://github.com/smogapi/docs/issues">https://github.com/smogapi/docs/issues</a></p>
 
 <h2 id="autor">Autor</h2>
 
@@ -301,7 +308,7 @@
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
-<p>Zapytanie do tego endpointu zwróci listę stacji znajdujących się w promieniu 10km od punktu określonego przez parametry <code class="prettyprint">latitude</code> i <code class="prettyprint">longitude</code>. Lista będzie posortowana od najbliższych stacji i będzie zawierać maksymalnie 10 stacji.</p>
+<p>Zapytanie do tego endpointu zwróci listę stacji znajdujących się w promieniu 10km od punktu określonego przez parametry <code class="prettyprint">latitude</code> i <code class="prettyprint">longitude</code>. Lista będzie posortowana od najbliższych stacji i będzie zawierać maksymalnie 10 stacji. W przypadku braku stacji API zwróci pustą listę (<code class="prettyprint">[]</code>).</p>
 
 <h3 id="zapytanie">Zapytanie</h3>
 
@@ -343,7 +350,7 @@
 </tr>
 <tr>
 <td><code class="prettyprint">_embedded.records</code></td>
-<td>Lista obiektów <a href="#obiekt-station"><code class="prettyprint">station</code></a></td>
+<td>Lista obiektów <a href="#obiekt-station"><code class="prettyprint">station</code></a>. W przypadku braku stacji będzie pusta.</td>
 </tr>
 </tbody></table>
 
@@ -1249,12 +1256,6 @@ Zauważ, że pierwszy na liście pomiarów (&ldquo;Przykładowa odpowiedź API&r
 <h3 id="odpowied">Odpowiedź</h3>
 
 <p>Zobacz: obiekt <a href="#obiekt-city"><code class="prettyprint">city</code></a>.</p>
-
-          <h1 id="zg-aszanie-b-d-w">Zgłaszanie błędów</h1>
-
-<p>Błędy związane z API: <a href="https://github.com/smogapi/api/issues">https://github.com/smogapi/api/issues</a></p>
-
-<p>Błędy związane z dokumentacją: <a href="https://github.com/smogapi/docs/issues">https://github.com/smogapi/docs/issues</a></p>
 
       </div>
       <div class="dark-box">
