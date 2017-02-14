@@ -91,6 +91,32 @@
       <script src="javascripts/all.js"></script>
   </head>
 
+  <script>window.twttr = (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0],
+      t = window.twttr || {};
+    if (d.getElementById(id)) return t;
+    js = d.createElement(s);
+    js.id = id;
+    js.src = "https://platform.twitter.com/widgets.js";
+    fjs.parentNode.insertBefore(js, fjs);
+
+    t._e = [];
+    t.ready = function(f) {
+      t._e.push(f);
+    };
+
+    return t;
+  }(document, "script", "twitter-wjs"));</script>
+
+  <div id="fb-root"></div>
+  <script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/pl_PL/sdk.js#xfbml=1&version=v2.8";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));</script>
+
   <body class="index" data-languages="[&quot;shell&quot;,&quot;javascript&quot;]">
     <a href="#" id="nav-button">
       <span>
@@ -123,6 +149,17 @@
 </blockquote>
 
 <p>SmogAPI to REST API zawierające listę pomiarów powietrza, które powstało aby ułatwić developerom (i innym zainteresowanym) dostęp do danych o jakości powietrza w Polsce. SmogAPI agreguje dane z dostępnych źródeł i prezentuje je w formie prostego i <a href="#skalowalno">skalowalnego</a> API nawet wtedy kiedy źródła danych są obciążone lub niedostępne.</p>
+
+<div style="padding: 5px 28px;">
+  <div class="fb-like" data-href="http://docs.smog.info.pl" data-layout="button" data-action="like" data-size="large" data-show-faces="false" data-share="true"></div>
+</div>
+
+<p><a class="twitter-share-button"
+  href="https://twitter.com/intent/tweet?text=SmogAPI:%20API%20z%20pomiarami%20jakości%20powietrza"
+  data-size="large">
+  <link rel="canonical" href="http://docs.smog.info.pl">
+  <link rel="me" href="https://twitter.com/bartn_">
+Tweet</a></p>
 
 <h1 id="o-api">O API</h1>
 
