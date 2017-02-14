@@ -17,6 +17,17 @@ search: true
 
 SmogAPI to REST API zawierające listę pomiarów powietrza, które powstało aby ułatwić developerom (i innym zainteresowanym) dostęp do danych o jakości powietrza w Polsce. SmogAPI agreguje dane z dostępnych źródeł i prezentuje je w formie prostego i [skalowalnego](#skalowalno) API nawet wtedy kiedy źródła danych są obciążone lub niedostępne.
 
+<div style="padding: 5px 28px;">
+  <div class="fb-like" data-href="http://docs.smog.info.pl" data-layout="button" data-action="like" data-size="large" data-show-faces="false" data-share="true"></div>
+</div>
+
+<a class="twitter-share-button"
+  href="https://twitter.com/intent/tweet?text=SmogAPI:%20API%20z%20pomiarami%20jakości%20powietrza"
+  data-size="large">
+  <link rel="canonical" href="http://docs.smog.info.pl">
+  <link rel="me" href="https://twitter.com/bartn_">
+Tweet</a>
+
 # O API
 
 ## Format odpowiedzi
