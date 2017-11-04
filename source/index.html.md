@@ -175,7 +175,7 @@ axios.get('https://api.smog.info.pl/stations/nearby?latitude='+latitude+'longitu
         },
         "id": "kopernika",
         "address": "ul. Kopernika 83 a",
-        "city": "Ĺťywiec",
+        "city": "Żywiec",
         "latitude": 49.671602,
         "longitude": 19.234446
       },
@@ -197,7 +197,7 @@ axios.get('https://api.smog.info.pl/stations/nearby?latitude='+latitude+'longitu
         },
         "id": "kossak-szczuckiej",
         "address": "ul. Kossak-Szczuckiej",
-        "city": "Bielsko-BiaĹa",
+        "city": "Bielsko-Biała",
         "latitude": 49.813464,
         "longitude": 19.027318
       },
@@ -219,7 +219,7 @@ axios.get('https://api.smog.info.pl/stations/nearby?latitude='+latitude+'longitu
         },
         "id": "sanatoryjna",
         "address": "ul. Sanatoryjna 7",
-        "city": "UstroĹ",
+        "city": "Ustroń",
         "latitude": 49.719731,
         "longitude": 18.826722
       },
@@ -262,7 +262,7 @@ axios.get('https://api.smog.info.pl/stations/nearby?latitude='+latitude+'longitu
           }
         },
         "id": "tolstoja",
-        "address": "ul. ToĹstoja 1",
+        "address": "ul. Tołstoja 1",
         "city": "Tychy",
         "latitude": 50.099903,
         "longitude": 18.990236
@@ -285,7 +285,7 @@ axios.get('https://api.smog.info.pl/stations/nearby?latitude='+latitude+'longitu
         },
         "id": "bory",
         "address": "Bory",
-        "city": "KaszĂłw",
+        "city": "Kaszów",
         "latitude": 50.025028,
         "longitude": 19.726833
       },
@@ -329,7 +329,7 @@ axios.get('https://api.smog.info.pl/stations/nearby?latitude='+latitude+'longitu
         },
         "id": "sikorskiego",
         "address": "ul. Sikorskiego 52",
-        "city": "Ĺťory",
+        "city": "Żory",
         "latitude": 50.029416,
         "longitude": 18.689527
       },
@@ -350,7 +350,7 @@ axios.get('https://api.smog.info.pl/stations/nearby?latitude='+latitude+'longitu
           }
         },
         "id": "zwm",
-        "address": "os. ZwiÄzku Walki MĹodych",
+        "address": "os. Związku Walki Młodych",
         "city": "Trzebinia",
         "latitude": 50.159406,
         "longitude": 19.477464
@@ -372,7 +372,7 @@ axios.get('https://api.smog.info.pl/stations/nearby?latitude='+latitude+'longitu
           }
         },
         "id": "plac-slowackiego",
-        "address": "Plac SĹowackiego",
+        "address": "Plac Słowackiego",
         "city": "Nowy Targ",
         "latitude": 49.483597,
         "longitude": 20.028992
