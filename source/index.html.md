@@ -152,7 +152,7 @@ axios.get('https://api.smog.info.pl/stations/nearby?latitude='+latitude+'longitu
 {
   "_links": {
     "self": {
-      "href": "/stations/nearby?latitude=49.6502\u0026longitude=19.2226"
+      "href": "/stations/nearby?latitude=49.6502&longitude=19.2226"
     }
   },
   "_embedded": {
@@ -175,16 +175,214 @@ axios.get('https://api.smog.info.pl/stations/nearby?latitude='+latitude+'longitu
         },
         "id": "kopernika",
         "address": "ul. Kopernika 83 a",
-        "city": "Żywiec",
+        "city": "Ĺťywiec",
         "latitude": 49.671602,
         "longitude": 19.234446
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "/cities/bielsko-biala/stations/kossak-szczuckiej"
+          },
+          "city": {
+            "href": "/cities/bielsko-biala"
+          },
+          "measurementsLatest": {
+            "href": "/cities/bielsko-biala/stations/kossak-szczuckiej/measurements"
+          },
+          "measurements": {
+            "href": "/cities/bielsko-biala/stations/kossak-szczuckiej/measurements/{date}",
+            "templated": true
+          }
+        },
+        "id": "kossak-szczuckiej",
+        "address": "ul. Kossak-Szczuckiej",
+        "city": "Bielsko-BiaĹa",
+        "latitude": 49.813464,
+        "longitude": 19.027318
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "/cities/ustron/stations/sanatoryjna"
+          },
+          "city": {
+            "href": "/cities/ustron"
+          },
+          "measurementsLatest": {
+            "href": "/cities/ustron/stations/sanatoryjna/measurements"
+          },
+          "measurements": {
+            "href": "/cities/ustron/stations/sanatoryjna/measurements/{date}",
+            "templated": true
+          }
+        },
+        "id": "sanatoryjna",
+        "address": "ul. Sanatoryjna 7",
+        "city": "UstroĹ",
+        "latitude": 49.719731,
+        "longitude": 18.826722
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "/cities/cieszyn/stations/mickiewicza"
+          },
+          "city": {
+            "href": "/cities/cieszyn"
+          },
+          "measurementsLatest": {
+            "href": "/cities/cieszyn/stations/mickiewicza/measurements"
+          },
+          "measurements": {
+            "href": "/cities/cieszyn/stations/mickiewicza/measurements/{date}",
+            "templated": true
+          }
+        },
+        "id": "mickiewicza",
+        "address": "ul. Mickiewicza 13",
+        "city": "Cieszyn",
+        "latitude": 49.738136,
+        "longitude": 18.639069
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "/cities/tychy/stations/tolstoja"
+          },
+          "city": {
+            "href": "/cities/tychy"
+          },
+          "measurementsLatest": {
+            "href": "/cities/tychy/stations/tolstoja/measurements"
+          },
+          "measurements": {
+            "href": "/cities/tychy/stations/tolstoja/measurements/{date}",
+            "templated": true
+          }
+        },
+        "id": "tolstoja",
+        "address": "ul. ToĹstoja 1",
+        "city": "Tychy",
+        "latitude": 50.099903,
+        "longitude": 18.990236
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "/cities/kaszow/stations/bory"
+          },
+          "city": {
+            "href": "/cities/kaszow"
+          },
+          "measurementsLatest": {
+            "href": "/cities/kaszow/stations/bory/measurements"
+          },
+          "measurements": {
+            "href": "/cities/kaszow/stations/bory/measurements/{date}",
+            "templated": true
+          }
+        },
+        "id": "bory",
+        "address": "Bory",
+        "city": "KaszĂłw",
+        "latitude": 50.025028,
+        "longitude": 19.726833
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "/cities/skawina/stations/ogrody"
+          },
+          "city": {
+            "href": "/cities/skawina"
+          },
+          "measurementsLatest": {
+            "href": "/cities/skawina/stations/ogrody/measurements"
+          },
+          "measurements": {
+            "href": "/cities/skawina/stations/ogrody/measurements/{date}",
+            "templated": true
+          }
+        },
+        "id": "ogrody",
+        "address": "os. Ogrody",
+        "city": "Skawina",
+        "latitude": 49.971047,
+        "longitude": 19.830422
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "/cities/zory/stations/sikorskiego"
+          },
+          "city": {
+            "href": "/cities/zory"
+          },
+          "measurementsLatest": {
+            "href": "/cities/zory/stations/sikorskiego/measurements"
+          },
+          "measurements": {
+            "href": "/cities/zory/stations/sikorskiego/measurements/{date}",
+            "templated": true
+          }
+        },
+        "id": "sikorskiego",
+        "address": "ul. Sikorskiego 52",
+        "city": "Ĺťory",
+        "latitude": 50.029416,
+        "longitude": 18.689527
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "/cities/trzebinia/stations/zwm"
+          },
+          "city": {
+            "href": "/cities/trzebinia"
+          },
+          "measurementsLatest": {
+            "href": "/cities/trzebinia/stations/zwm/measurements"
+          },
+          "measurements": {
+            "href": "/cities/trzebinia/stations/zwm/measurements/{date}",
+            "templated": true
+          }
+        },
+        "id": "zwm",
+        "address": "os. ZwiÄzku Walki MĹodych",
+        "city": "Trzebinia",
+        "latitude": 50.159406,
+        "longitude": 19.477464
+      },
+      {
+        "_links": {
+          "self": {
+            "href": "/cities/nowy-targ/stations/plac-slowackiego"
+          },
+          "city": {
+            "href": "/cities/nowy-targ"
+          },
+          "measurementsLatest": {
+            "href": "/cities/nowy-targ/stations/plac-slowackiego/measurements"
+          },
+          "measurements": {
+            "href": "/cities/nowy-targ/stations/plac-slowackiego/measurements/{date}",
+            "templated": true
+          }
+        },
+        "id": "plac-slowackiego",
+        "address": "Plac SĹowackiego",
+        "city": "Nowy Targ",
+        "latitude": 49.483597,
+        "longitude": 20.028992
       }
     ]
   }
 }
 ```
 
-Zapytanie do tego endpointu zwróci listę stacji znajdujących się w promieniu 10km od punktu określonego przez parametry `latitude` i `longitude`. Lista będzie posortowana od najbliższych stacji i będzie zawierać maksymalnie 10 stacji. W przypadku braku stacji API zwróci pustą listę (`[]`).
+Zapytanie do tego endpointu zwróci listę 10 najbliższych stacji od punktu określonego przez parametry `latitude` i `longitude`. Lista będzie posortowana od najbliższych stacji i będzie zawierać maksymalnie 10 stacji.
 
 ### Zapytanie
 
@@ -203,7 +401,7 @@ Pole | Opis
 --------- | -------
 `_links.self` | Relatywny link do samego siebie
 `_links.city` | Relatywny link do miasta
-`_embedded.records` | Lista obiektów [`station`](#obiekt-station). W przypadku braku stacji będzie pusta.
+`_embedded.records` | Lista obiektów [`station`](#obiekt-station).
 
 ## Lista stacji w danym mieście
 
